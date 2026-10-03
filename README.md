@@ -7,6 +7,8 @@ Gmail-like search expressions for Thunderbird's quick filter bar. Type `from:fre
 messages from Fred to Tom with an attachment. It also offers regular expressions, click-to-search, saved searches
 and global search.
 
+![Typing an expression in the quick filter bar: the list filters as you type and the help explains the operators](docs/screenshots/1-expression-search.png)
+
 Expression Search Reloaded is an **open-source continuation** of
 [Expression Search / GMailUI](https://github.com/wangvisual/expression-search) by Opera Wang and its Thunderbird 78
 port *Expression Search NG* by Klaus Buecher (opto). The NG add-on is still published on addons.thunderbird.net,
@@ -74,6 +76,8 @@ src/                         the add-on (no build step besides zipping)
 tests/unit/                  node --test
 tests/integration/           Marionette harness, run.mjs (main suite), options.mjs (options page)
 scripts/build.mjs            XPI packager
+scripts/screenshots.mjs      renders docs/screenshots/ (listing and README images)
+docs/atn-listing.md          addons.thunderbird.net listing texts, release and reviewer notes
 legacy/                      the original 2.4beta package and its extracted sources (reference only)
 ```
 

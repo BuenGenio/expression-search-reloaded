@@ -54,8 +54,11 @@ CI runs weekly against the current release, the newest ESR and the beta. The bet
 1. Update `version` in `src/manifest.json` and `package.json`, and add a section to `CHANGELOG.md`.
 2. Commit, then tag `vX.Y.Z` and push the tag. The release workflow runs the tests, checks that the tag matches the
    manifest version, builds the XPI and attaches it to a GitHub release.
-3. For addons.thunderbird.net: upload the same XPI. Add-ons with Experiments are reviewed manually; the source in the
-   package is the readable source, so no extra source upload is needed.
+3. For addons.thunderbird.net: upload the same XPI (Developer Hub › your add-on › *Upload New Version*) and paste the
+   release notes. Add-ons with Experiments are reviewed manually; the source in the package is the readable source,
+   so no extra source upload is needed. Listing texts, reviewer notes and screenshot captions are in
+   [docs/atn-listing.md](docs/atn-listing.md); refresh the screenshots with `node scripts/screenshots.mjs` when the
+   UI changes.
 
 ## Commit and PR conventions
 
