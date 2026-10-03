@@ -13,7 +13,8 @@ port *Expression Search NG* by Klaus Buecher (opto). The NG add-on is still publ
 but its source is only available inside the packaged add-on. This project is developed in the open, with tests,
 for current Thunderbird releases.
 
-* **Thunderbird:** 153 ESR – 157 (tested on 153.3.1esr, 156.0.1 and 157.0)
+* **Thunderbird:** 153 ESR – 157. CI tests every change against the current release, the newest ESR and the beta
+  (currently 157.0.1, 153.4.0esr and 158.0b2).
 * **User guide:** [src/help/help.html](src/help/help.html), also opened by the **?** button next to the search box
 * **Why this fork, and what was fixed:** [AUDIT.md](AUDIT.md), a security/privacy/compatibility audit of the 2.4beta code
 * **Changes:** [CHANGELOG.md](CHANGELOG.md)
