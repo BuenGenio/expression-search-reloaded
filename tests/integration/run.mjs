@@ -184,11 +184,51 @@ try {
     assert.match(r.text, /From matches a regular expression/);
   });
 
+  await check("help popup closes on Enter, on blur and when a message is selected", async () => {
+    const r = await run(`
+      const a3 = ES_TEST.about3Pane;
+      const help = a3.document.getElementById("esr-search-help");
+      const input = ES_TEST.input;
+      const states = {};
+      const type = text => {
+        input.focus();
+        input.value = text;
+        input.dispatchEvent(new a3.Event("input", { bubbles: true }));
+      };
+      type("f:alice"); await ES_TEST.sleep(50);
+      states.typing = help.hidden;
+      ES_TEST.key(input, "Enter"); await ES_TEST.settle();
+      states.afterEnter = help.hidden;
+      type("f:alice s:"); await ES_TEST.sleep(50);
+      states.typingAgain = help.hidden;
+      a3.threadTree.table.body.focus(); await ES_TEST.sleep(50);
+      states.afterBlur = help.hidden;
+      type("f:bob"); await ES_TEST.sleep(50);
+      states.typingThird = help.hidden;
+      const row = await ES_TEST.rowFor("M02");
+      row.dispatchEvent(new a3.MouseEvent("mousedown", { bubbles: true, button: 0 }));
+      row.dispatchEvent(new a3.MouseEvent("click", { bubbles: true, button: 0 }));
+      await ES_TEST.sleep(100);
+      states.afterSelect = help.hidden;
+      await ES_TEST.clear();
+      return states;`);
+    assert.deepEqual(r, {
+      typing: false,
+      afterEnter: true,
+      typingAgain: false,
+      afterBlur: true,
+      typingThird: false,
+      afterSelect: true,
+    });
+  });
+
   await check("invalid regex is reported and does not filter", async () => {
     const listed = await run("return ES_TEST.search('regex:/a(/');");
     const help = await run("return ES_TEST.helpText();");
     assert.deepEqual(listed, ALL);
+    assert.equal(help.hidden, false, "the popup stays open to explain the error");
     assert.match(help.text, /Invalid regular expression/);
+    assert.match(await run("return ES_TEST.input.title;"), /Invalid regular expression/);
     const cls = await run("return ES_TEST.input.parentNode.classList.contains('esr-error');");
     assert.equal(cls, true);
   });

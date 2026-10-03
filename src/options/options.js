@@ -75,7 +75,6 @@ function render(options) {
     select.value = "";
   }
   form.elements.helpShowSeconds.disabled = !options.showHelp;
-  form.elements.helpHideSeconds.disabled = !options.showHelp;
 }
 
 function readForm() {

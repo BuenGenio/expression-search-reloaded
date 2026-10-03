@@ -175,7 +175,7 @@ class Pane {
     this.listen(input, "input", () => this.onInput());
     this.listen(input, "keydown", event => this.onKeyDown(event));
     this.listen(input, "focus", () => this.updateHelp());
-    this.listen(input, "blur", () => this.scheduleHideHelp(this.options.helpHideSeconds));
+    this.listen(input, "blur", () => this.hideHelp());
     this.listen(input, "click", () => this.updateHelp());
     this.listen(input, "keyup", event => {
       if (event.key.startsWith("Arrow") || event.key == "Home" || event.key == "End") {
@@ -187,6 +187,13 @@ class Pane {
     const threadTree = doc.getElementById("threadTree");
     if (threadTree) {
       this.listen(threadTree, "contextmenu", event => this.onThreadContextMenu(event), true);
+      // Selecting a message closes the popup; selection changes caused by
+      // results reloading while typing must not.
+      this.listen(threadTree, "select", () => {
+        if (this.doc.activeElement != this.input) {
+          this.hideHelp();
+        }
+      });
     }
     this.listen(this.win, "unload", () => C.detachPane(this.win, false), { once: true });
 
@@ -272,9 +279,14 @@ class Pane {
         const text = this.input.value;
         if (!text.trim()) {
           this.apply("");
+          this.hideHelp();
           return;
         }
         const compiled = C.compile(text);
+        // The popup is a typing aid: Enter closes it, unless it has to explain
+        // why the expression could not be used. Feedback of Ctrl/Shift+Enter
+        // reopens it through setStatus(..., true).
+        this.hideHelp();
         if (event.ctrlKey || event.metaKey) {
           C.createSavedSearch(this, text);
         } else if (event.shiftKey || compiled.kind == "gloda") {
@@ -285,6 +297,9 @@ class Pane {
           this.pendingSelectFirst = this.options.selectFirstOnEnter;
           this.apply(text);
           this.input.select();
+          if (compiled.errors.length) {
+            this.updateHelp();
+          }
         }
         break;
       }
@@ -311,8 +326,8 @@ class Pane {
           event.stopPropagation();
           this.input.value = "";
           this.apply("");
-          this.updateHelp();
         }
+        this.hideHelp();
         break;
     }
   }
@@ -362,6 +377,7 @@ class Pane {
       this.setError("");
     } catch (e) {
       this.setError(this.controller.errorMessage({ code: e.message, detail: e.detail }));
+      this.showHelp();
     }
   }
 
@@ -412,30 +428,49 @@ class Pane {
   setError(message) {
     this.helpLines.error.textContent = message;
     this.box.classList.toggle("esr-error", !!message);
+    this.updateTitle();
   }
 
-  setStatus(text) {
+  /**
+   * Notes about the last search (body search coverage, "no results", saved
+   * search warnings). They are shown in the box's tooltip; `show` also opens
+   * the popup, for feedback on an explicit action (Ctrl/Shift+Enter).
+   */
+  setStatus(text, show = false) {
     this.statusText = text;
     this.helpLines.stats.textContent = text;
-    if (text && this.doc.activeElement == this.input) {
+    this.updateTitle();
+    if (show && text) {
       this.showHelp();
     }
   }
 
+  updateTitle() {
+    const title = [this.helpLines.error.textContent, this.statusText].filter(Boolean).join("\n");
+    if (title) {
+      this.input.title = title;
+    } else {
+      this.input.removeAttribute("title");
+    }
+  }
+
   showHelp() {
+    this.win.clearTimeout(this.helpTimer);
     if (!this.options.showHelp) {
       this.help.hidden = true;
       return;
     }
     this.help.hidden = false;
-    this.scheduleHideHelp(this.options.helpShowSeconds);
+    // Also close it when the user just stops typing.
+    this.helpTimer = this.win.setTimeout(
+      () => this.hideHelp(),
+      Math.max(1, this.options.helpShowSeconds) * 1000
+    );
   }
 
-  scheduleHideHelp(seconds) {
+  hideHelp() {
     this.win.clearTimeout(this.helpTimer);
-    this.helpTimer = this.win.setTimeout(() => {
-      this.help.hidden = true;
-    }, Math.max(0, seconds) * 1000);
+    this.help.hidden = true;
   }
 
   // ---------------------------------------------------------------------------
@@ -1077,12 +1112,12 @@ class Controller {
     const compiled = this.compile(text);
     const currentFolder = pane.win.gFolder;
     if (compiled.kind != "search" || !currentFolder) {
-      pane.setStatus(this.localize("savedSearchUnavailable"));
+      pane.setStatus(this.localize("savedSearchUnavailable"), true);
       return;
     }
     const parent = this.savedSearchParent(currentFolder);
     if (!parent) {
-      pane.setStatus(this.localize("savedSearchBadParent"));
+      pane.setStatus(this.localize("savedSearchBadParent"), true);
       return;
     }
 
@@ -1122,7 +1157,7 @@ class Controller {
     if (parent.containsChildNamed(VIRTUAL_FOLDER_NAME)) {
       folder = parent.getChildNamed(VIRTUAL_FOLDER_NAME);
       if (!(folder.flags & Ci.nsMsgFolderFlags.Virtual)) {
-        pane.setStatus(this.localize("savedSearchNameTaken", [VIRTUAL_FOLDER_NAME]));
+        pane.setStatus(this.localize("savedSearchNameTaken", [VIRTUAL_FOLDER_NAME]), true);
         return;
       }
       const wrapper = lazy.VirtualFolderHelper.wrapVirtualFolder(folder);
@@ -1143,7 +1178,7 @@ class Controller {
       ).virtualFolder;
     }
 
-    pane.setStatus(exact ? "" : this.localize("savedSearchNotExact"));
+    pane.setStatus(exact ? "" : this.localize("savedSearchNotExact"), !exact);
 
     if (this.options.virtualFolderInNewTab) {
       pane.win.top.document.getElementById("tabmail")?.openTab("mail3PaneTab", {
@@ -1163,7 +1198,7 @@ class Controller {
     const compiled = this.compile(text);
     const query = compiled.kind == "gloda" ? compiled.glodaQuery : this.Parser.toGlodaQuery(text);
     if (!this.glodaEnabled) {
-      pane.setStatus(this.localize("glodaDisabled"));
+      pane.setStatus(this.localize("glodaDisabled"), true);
       return;
     }
     if (!query) {
@@ -1209,7 +1244,6 @@ function readLegacyPrefs(extension) {
     enable_verbose_info: "verbose",
     enable_statusbar_info: "showHelp",
     statusbar_info_showtime: "helpShowSeconds",
-    statusbar_info_hidetime: "helpHideSeconds",
     search_timeout: "searchTimeout",
     c2s_enableCtrl: "c2sEnableCtrl",
     c2s_enableShift: "c2sEnableShift",

@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "author": "Yevgen Trotsan; based on work by Klaus Buecher, Opera Wang and Ken Mixter",
   "homepage_url": "https://github.com/BuenGenio/expression-search-reloaded",
   "default_locale": "en",

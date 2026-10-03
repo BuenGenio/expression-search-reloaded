@@ -56,7 +56,7 @@ npm test                    # parser, locale and static security checks
 npm run build               # -> dist/expression-search-reloaded-<version>.xpi
 npm run test:integration    # end-to-end in a headless Thunderbird (default /snap/bin/thunderbird)
 node tests/integration/run.mjs /path/to/thunderbird
-ES_ADDON=dist/expression-search-reloaded-5.0.0.xpi npm run test:integration
+ES_ADDON=dist/expression-search-reloaded-<version>.xpi npm run test:integration
 ```
 
 The integration tests start a **separate** headless Thunderbird with `-no-remote` and a throw-away profile under

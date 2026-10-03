@@ -244,13 +244,10 @@
     "message": "Select the first message after pressing Enter"
   },
   "opt_showHelp": {
-    "message": "Show the help popup while typing"
+    "message": "Show the help popup while typing (it closes on Enter, when you leave the box or select a message)"
   },
   "opt_helpShowSeconds": {
-    "message": "Hide the help popup after"
-  },
-  "opt_helpHideSeconds": {
-    "message": "Hide the help popup after leaving the search box after"
+    "message": "Also close it when you stop typing for"
   },
   "sectionSavedSearch": {
     "message": "Saved search (Ctrl+Enter)"

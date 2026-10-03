@@ -2,6 +2,18 @@
 
 All notable changes are documented here. Versions follow [semantic versioning](https://semver.org/).
 
+## 5.0.1 – 2026-10-04
+
+### Fixed
+* The help popup under the search box stayed open after pressing Enter and for two seconds after leaving the box,
+  and search notes could reopen it. It is now a typing aid only: it closes on Enter, Escape, when the box loses
+  focus or a message is selected, and after the configured idle time. It stays open after Enter only to explain an
+  invalid expression. Notes about the last search (errors, body-search coverage, "no results") are shown as the
+  search box's tooltip.
+
+### Removed
+* The option "hide the help popup N seconds after leaving the search box" (it now closes immediately).
+
 ## 5.0.0 – 2026-10-03
 
 First release of **Expression Search Reloaded**, a rewrite of Expression Search NG 2.4beta for current Thunderbird.
