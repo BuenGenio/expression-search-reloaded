@@ -1,0 +1,20 @@
+name: Feature request
+description: Suggest a new operator, option or improvement
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What do you want to find or do?
+      description: Describe the search or workflow, not only the solution.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: How could it work?
+      description: For example an operator syntax like `acc:work`, or where a button would go.
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Workarounds you use today

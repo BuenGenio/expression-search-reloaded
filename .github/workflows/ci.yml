@@ -1,0 +1,84 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    # Weekly, to notice new Thunderbird releases/betas that break the add-on.
+    - cron: "23 5 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  unit:
+    name: Unit and static tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - run: npm test
+      - run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: xpi
+          path: dist/*.xpi
+          if-no-files-found: error
+
+  thunderbird:
+    name: Thunderbird ${{ matrix.channel }}
+    needs: unit
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    # The beta is an early warning only.
+    continue-on-error: ${{ matrix.channel == 'beta' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        channel: [release, esr, beta]
+    env:
+      ES_PROFILE_ROOT: ${{ github.workspace }}/.profiles
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - uses: actions/download-artifact@v4
+        with:
+          name: xpi
+          path: dist
+      - name: Install Thunderbird (${{ matrix.channel }})
+        run: |
+          bin=$(node scripts/get-thunderbird.mjs "${{ matrix.channel }}" "$RUNNER_TEMP/tb")
+          echo "THUNDERBIRD_BIN=$bin" >> "$GITHUB_ENV"
+          "$bin" --version
+      - name: Select the add-on under test
+        run: |
+          if [ "${{ matrix.channel }}" = beta ]; then
+            # The beta is newer than strict_max_version; test an unpinned copy.
+            cp -r src "$RUNNER_TEMP/addon"
+            node -e '
+              const fs = require("fs"), f = process.argv[1];
+              const m = JSON.parse(fs.readFileSync(f, "utf8"));
+              delete m.browser_specific_settings.gecko.strict_max_version;
+              fs.writeFileSync(f, JSON.stringify(m, null, 2));
+            ' "$RUNNER_TEMP/addon/manifest.json"
+            echo "ES_ADDON=$RUNNER_TEMP/addon" >> "$GITHUB_ENV"
+          else
+            echo "ES_ADDON=$(ls "$PWD"/dist/*.xpi)" >> "$GITHUB_ENV"
+          fi
+      - name: Main suite
+        run: node tests/integration/run.mjs "$THUNDERBIRD_BIN"
+      - name: Options page suite
+        if: success() || failure()
+        run: node tests/integration/options.mjs "$THUNDERBIRD_BIN"
+      - name: Upload Thunderbird logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: thunderbird-logs-${{ matrix.channel }}
+          path: .profiles/*.log

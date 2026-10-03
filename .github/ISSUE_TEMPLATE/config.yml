@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Security problem
+    url: https://github.com/BuenGenio/expression-search-reloaded/security/advisories/new
+    about: Please report vulnerabilities privately.
+  - name: Expression Search NG (the add-on by opto on addons.thunderbird.net)
+    url: https://github.com/opto/Expression-Search-NG/issues
+    about: Issues with that add-on are handled by its maintainer.
