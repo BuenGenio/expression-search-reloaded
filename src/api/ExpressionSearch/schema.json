@@ -1,0 +1,98 @@
+[
+  {
+    "namespace": "ExpressionSearch",
+    "description": "Integrates the expression search box into the quick filter bar of Thunderbird's mail tabs and registers the custom search terms.",
+    "functions": [
+      {
+        "name": "setOptions",
+        "type": "function",
+        "async": true,
+        "description": "Starts the integration on first call and applies the given options. Unknown keys are ignored.",
+        "parameters": [
+          {
+            "name": "options",
+            "type": "object",
+            "additionalProperties": {
+              "type": "any"
+            }
+          }
+        ]
+      },
+      {
+        "name": "searchFromMessage",
+        "type": "function",
+        "async": true,
+        "description": "Searches the given mail tab for messages that share a field with the given message (click-to-search).",
+        "parameters": [
+          {
+            "name": "tabId",
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "name": "messageId",
+            "type": "integer",
+            "minimum": 0
+          },
+          {
+            "name": "field",
+            "type": "string",
+            "enum": [
+              "subject",
+              "from",
+              "recipients",
+              "correspondent",
+              "tags",
+              "date"
+            ]
+          }
+        ]
+      },
+      {
+        "name": "getLegacyPrefs",
+        "type": "function",
+        "async": true,
+        "description": "Returns the settings of Expression Search 2.x (extensions.expressionsearch.* preferences) converted to the current option names, or null if there are none.",
+        "parameters": []
+      },
+      {
+        "name": "getCustomDBHeaders",
+        "type": "function",
+        "async": true,
+        "description": "Returns the extra headers Thunderbird stores in its message database (mailnews.customDBHeaders), needed for the headerre: operator.",
+        "parameters": []
+      },
+      {
+        "name": "setCustomDBHeaders",
+        "type": "function",
+        "async": true,
+        "description": "Sets mailnews.customDBHeaders. Only header names (letters, digits, '-') separated by spaces are accepted.",
+        "parameters": [
+          {
+            "name": "headers",
+            "type": "string",
+            "pattern": "^[A-Za-z0-9-]*( [A-Za-z0-9-]+)*$",
+            "maxLength": 1024
+          }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "name": "onCommand",
+        "type": "function",
+        "description": "Fired when the user requests something that the background page handles, e.g. opening the help page.",
+        "parameters": [
+          {
+            "name": "command",
+            "type": "string",
+            "enum": [
+              "openHelp",
+              "openOptions"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

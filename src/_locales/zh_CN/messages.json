@@ -1,0 +1,188 @@
+{
+  "searchBoxLabel": {
+    "message": "表达式搜索"
+  },
+  "searchBoxPlaceholder": {
+    "message": "表达式搜索…"
+  },
+  "searchBoxPlaceholderWithKey": {
+    "message": "表达式搜索… ($1)"
+  },
+  "term_Bcc": {
+    "message": "密件抄送"
+  },
+  "term_toSomebodyOnly": {
+    "message": "仅发送给某人"
+  },
+  "term_subjectRegex": {
+    "message": "标题 (正则表达式)"
+  },
+  "term_subjectSimple": {
+    "message": "标题 (长)"
+  },
+  "term_headerRegex": {
+    "message": "邮件头 (正则表达式)"
+  },
+  "term_fromRegex": {
+    "message": "发信人 (正则表达式)"
+  },
+  "term_toRegex": {
+    "message": "收信人 (To/Cc/Bcc 正则表达式)"
+  },
+  "term_dayTime": {
+    "message": "时间 (每天)"
+  },
+  "term_dateMatch": {
+    "message": "日期匹配 (2011/01/01)"
+  },
+  "term_attachmentNameOrType": {
+    "message": "附件名字或类型"
+  },
+  "term_bodyRegex": {
+    "message": "正文 (正则表达式)"
+  },
+  "info_after": {
+    "message": "after:Mar 10, 2011\naf:(2011/03/01 -2011/03/09)\nafter:Mon, 25 Dec 1995 13:30:00 GMT\naf:(3:0 -4:0) 将搜索每天3到4点的邮件"
+  },
+  "info_all": {
+    "message": "搜索所有from, to, cc, 或者subject以及body符合的邮件"
+  },
+  "info_attachment": {
+    "message": "attachment:yes 或者 a:yes 或者 a:no"
+  },
+  "info_bcc": {
+    "message": "BCC包含"
+  },
+  "info_before": {
+    "message": "before:2011/03/09 07:12:00\nbe:09 Mar 2011 05:00:00"
+  },
+  "info_body": {
+    "message": "Body 包含"
+  },
+  "info_bodyre": {
+    "message": "bodyre:/hello.*world/i\n邮件正文匹配正则表达式"
+  },
+  "info_cc": {
+    "message": "CC 包含"
+  },
+  "info_date": {
+    "message": "date:yyyy/mm/dd hh:mm:ss\ndate:2011/01\ndate:2011/01/03"
+  },
+  "info_days": {
+    "message": "age:3 或者 older_than:today 或者 days:(3 -5)\n单位: d, w, m, y"
+  },
+  "info_filename": {
+    "message": "filename:foo.doc 或者 fi:image 或者 fn:msword 或者 file:html\n搜索附件的名字或者类型"
+  },
+  "info_from": {
+    "message": "from:(Alice 或者 Bob)\n搜索From"
+  },
+  "info_fromre": {
+    "message": "fromre:/[a-d]test/i\n使用正则表达式搜索From"
+  },
+  "info_fromto": {
+    "message": "fromto:(Alice)\nFrom 或者 To 或者 CC 或者 BCC 包含"
+  },
+  "info_gloda": {
+    "message": "如果使能了全局搜索，那么就使用它"
+  },
+  "info_headerre": {
+    "message": "headerre:List-Id=/all-test/i 或者 h:list-id 或者 hr:邮件头~/^值/"
+  },
+  "info_newer_than": {
+    "message": "n:8 或者 nt:7week 或者 newer_than:1year"
+  },
+  "info_only": {
+    "message": "only:tom\n收件人仅仅包含tom"
+  },
+  "info_regex": {
+    "message": "regex:/^begin/i 或者 re:end$ 或者 r:/\\d+\\s*\\d+/\n标题匹配正则表达式"
+  },
+  "info_simple": {
+    "message": "simple:hello\n标题包含(支持特殊字符)"
+  },
+  "info_size": {
+    "message": "size:10 或者 size:1.4M\n邮件大小超过"
+  },
+  "info_smaller": {
+    "message": "smaller:1G 或者 sm:1024\n邮件大小小于"
+  },
+  "info_status": {
+    "message": "is:replied 或者 i:UnRead 或者 status:Forwarded 或者 status:F\nstatus可以是Replied, Read, Marked/Star, Forwarded, UnRead, New, ImapDeleted 或者 Attachment中的任意一个."
+  },
+  "info_subject": {
+    "message": "subject:(Hello -World!)\n搜索标题中含有Hello but not World!的邮件"
+  },
+  "info_tag": {
+    "message": "tag:Important\nTag 包含\ntag:NA意味着没有任何的标记"
+  },
+  "info_to": {
+    "message": "To 或者 CC 包含"
+  },
+  "info_tonocc": {
+    "message": "To 包含"
+  },
+  "info_tore": {
+    "message": "tore:/[a-d]test/i\n使用正则表达式搜索收信人(To/Cc/Bcc)"
+  },
+  "sectionSearchBox": {
+    "message": "设置"
+  },
+  "opt_hideNormalFilter": {
+    "message": "隐藏'过滤这些消息...'输入框"
+  },
+  "opt_actAsNormalFilter": {
+    "message": "当被搜索字符串中没有表达式搜索的命令时，作为普通快速过滤器使用"
+  },
+  "opt_searchTimeout": {
+    "message": "设置表达式搜索框超时时间为"
+  },
+  "opt_selectFirstOnEnter": {
+    "message": "按回车选中第一条邮件"
+  },
+  "opt_reuseExistingFolder": {
+    "message": "重新生成保存搜索时不改变选其中的文件夹选择"
+  },
+  "opt_virtualFolderInNewTab": {
+    "message": "在新的Tab中打开保存搜索目录/虚拟目录"
+  },
+  "opt_virtualFolderParent": {
+    "message": "当按下Ctrl+Enter键时，在下面目录里创建或更新ExpressionSearch虚拟目录:"
+  },
+  "opt_virtualFolderParentDefault": {
+    "message": "当前目录的根目录"
+  },
+  "sectionClickToSearch": {
+    "message": "设置点击搜索"
+  },
+  "opt_c2sEnableCtrl": {
+    "message": "邮件列表中按 Ctrl+鼠标右键 执行搜索"
+  },
+  "opt_c2sEnableShift": {
+    "message": "邮件列表中按 Shift+鼠标右键 执行搜索"
+  },
+  "opt_c2sCtrlReplace": {
+    "message": "Ctrl组合搜索时使用下面的替换"
+  },
+  "opt_c2sShiftReplace": {
+    "message": "Shift组合搜索时使用下面的替换"
+  },
+  "opt_c2sRegexpMatch": {
+    "message": "匹配"
+  },
+  "opt_c2sRegexpReplace": {
+    "message": "替换"
+  },
+  "opt_c2sRemoveDomain": {
+    "message": "删除所有邮件地址里的域名"
+  },
+  "opt_verbose": {
+    "message": "在控制台中显示详细信息"
+  },
+  "unitMs": {
+    "message": "毫秒"
+  },
+  "openHelp": {
+    "message": "帮助"
+  }
+}

@@ -1,0 +1,342 @@
+{
+  "extensionName": {
+    "message": "Expression Search Reloaded"
+  },
+  "extensionDescription": {
+    "message": "Gmail-like search expressions for Thunderbird's quick filter bar: type \"from:fred to:tom a:yes\" to see all messages from Fred to Tom with an attachment. Regular expressions, click-to-search, saved searches. Open-source continuation of Expression Search / GMailUI."
+  },
+  "searchBoxLabel": {
+    "message": "Expression Search"
+  },
+  "searchBoxPlaceholder": {
+    "message": "Expression search…"
+  },
+  "searchBoxPlaceholderWithKey": {
+    "message": "Expression search… ($1)",
+    "description": "$1 is the keyboard shortcut, e.g. Ctrl+Shift+K"
+  },
+  "helpButtonTooltip": {
+    "message": "Expression Search Reloaded help"
+  },
+  "helpBlank": {
+    "message": "Type keywords or operators such as from:, to:, subject:, body:, a:yes. Enter: search now · Ctrl+Enter: saved search · Shift+Enter: global search."
+  },
+  "helpNormalFilter": {
+    "message": "No operators: acting like the normal quick filter (see the field buttons below)."
+  },
+  "helpCalc": {
+    "message": "Calculator: press Enter to show the result."
+  },
+  "helpGloda": {
+    "message": "Global search for: $1 (press Enter)"
+  },
+  "helpBodyStats": {
+    "message": "Body searched in $1 of $2 messages; the others have no offline copy (enable offline sync to search them)."
+  },
+  "helpNoResultsGloda": {
+    "message": "No matches here. Press Shift+Enter to search all folders (global search)."
+  },
+  "savedSearchUnavailable": {
+    "message": "A saved search can only be created for a valid expression while a folder is displayed."
+  },
+  "savedSearchBadParent": {
+    "message": "The folder configured for saved searches does not exist any more. Please check the options."
+  },
+  "savedSearchNameTaken": {
+    "message": "A folder named \"$1\" that is not a saved search is in the way."
+  },
+  "savedSearchNotExact": {
+    "message": "Saved searches cannot store parentheses: with more than one OR group this saved search may show more messages than the message list."
+  },
+  "glodaDisabled": {
+    "message": "Global search is disabled (Settings › General › Global Search and Indexer)."
+  },
+  "term_Bcc": {
+    "message": "Bcc"
+  },
+  "term_toSomebodyOnly": {
+    "message": "To Somebody Only"
+  },
+  "term_subjectRegex": {
+    "message": "Subject (RegEx)"
+  },
+  "term_subjectSimple": {
+    "message": "Subject (Long)"
+  },
+  "term_headerRegex": {
+    "message": "Header (RegEx)"
+  },
+  "term_fromRegex": {
+    "message": "From (RegEx)"
+  },
+  "term_toRegex": {
+    "message": "Recipients (To/Cc/Bcc RegEx)"
+  },
+  "term_dayTime": {
+    "message": "Time (Every Day)"
+  },
+  "term_dateMatch": {
+    "message": "Date Match (2011/01/01)"
+  },
+  "term_attachmentNameOrType": {
+    "message": "Attachment Name/Type"
+  },
+  "term_bodyRegex": {
+    "message": "Body (RegEx)"
+  },
+  "info_after": {
+    "message": "after:2011/03/10   af:(2011/03/01 -2011/03/09)   after:Mon, 25 Dec 1995 13:30:00 GMT\naf:(3:00 -4:00) finds messages sent between 3 and 4 o'clock on any day"
+  },
+  "info_all": {
+    "message": "Searches From, To, Cc, Subject and the body"
+  },
+  "info_attachment": {
+    "message": "a:yes or a:no; any other value searches attachment names/types (like filename:)"
+  },
+  "info_bcc": {
+    "message": "Bcc field contains (only known for messages you sent)"
+  },
+  "info_before": {
+    "message": "before:2011/03/09 07:12:00   be:09 Mar 2011 05:00"
+  },
+  "info_body": {
+    "message": "Body contains"
+  },
+  "info_bodyre": {
+    "message": "bodyre:/hello.*world/i — body matches a regular expression; must be the last operator. Slow on large folders."
+  },
+  "info_cc": {
+    "message": "Cc field contains"
+  },
+  "info_date": {
+    "message": "date:2011/01 or date:2011/01/03 — date (yyyy/mm/dd hh:mm:ss) contains"
+  },
+  "info_days": {
+    "message": "older_than:3 / age:2w / days:today — older than N days; units: d, w, m, y; today and yesterday"
+  },
+  "info_filename": {
+    "message": "filename:report.pdf   fi:image   fn:msword — attachment name or type contains"
+  },
+  "info_from": {
+    "message": "from:(Alice or Bob) — From field contains"
+  },
+  "info_fromre": {
+    "message": "fromre:/^[a-d].*$/i — From matches a regular expression (last operator)"
+  },
+  "info_fromto": {
+    "message": "fromto:alice — From, To, Cc or Bcc contains"
+  },
+  "info_gloda": {
+    "message": "g: at the start runs a global (gloda) search over all indexed folders"
+  },
+  "info_headerre": {
+    "message": "headerre:List-Id=/all-test/i   h:list-id — header present / matches; the header must be listed in the options (customDBHeaders)"
+  },
+  "info_newer_than": {
+    "message": "newer_than:8   n:7w   nt:1y — newer than N days"
+  },
+  "info_only": {
+    "message": "only:tom — tom is the only recipient in the To field"
+  },
+  "info_regex": {
+    "message": "regex:/^begin/i   re:end$ — subject matches a regular expression (last operator)"
+  },
+  "info_simple": {
+    "message": "simple:hello (world) — subject contains the rest of the input literally (last operator)"
+  },
+  "info_size": {
+    "message": "size:10 or larger:1.4M — size in KB (K, M, G suffixes) greater than"
+  },
+  "info_smaller": {
+    "message": "smaller:1G or sm:1024 — size less than"
+  },
+  "info_status": {
+    "message": "is:replied, is:unread, is:starred, status:forwarded — Read, Unread, Replied, Starred/Flagged, Forwarded, New, Deleted, Attachment"
+  },
+  "info_subject": {
+    "message": "subject:(hello -world) — subject contains hello but not world"
+  },
+  "info_tag": {
+    "message": "tag:important or tag:#2 — tag name contains; tag:na means no tag"
+  },
+  "info_to": {
+    "message": "To or Cc field contains"
+  },
+  "info_tonocc": {
+    "message": "To field contains"
+  },
+  "info_tore": {
+    "message": "tore:/^[a-d].*$/i — To/Cc/Bcc match a regular expression (last operator)"
+  },
+  "error_tooDeep": {
+    "message": "Too many nested parentheses."
+  },
+  "error_tooComplex": {
+    "message": "The expression is too complex to search (too many OR combinations)."
+  },
+  "error_internal": {
+    "message": "Internal error: $1"
+  },
+  "error_badRegex": {
+    "message": "Invalid regular expression: $1"
+  },
+  "error_badHeader": {
+    "message": "Invalid header specification: $1 (use Header=regex)"
+  },
+  "error_badTime": {
+    "message": "Invalid time of day: $1"
+  },
+  "error_badDate": {
+    "message": "Invalid date: $1 (use yyyy/mm/dd [hh:mm[:ss]])"
+  },
+  "error_badAge": {
+    "message": "Invalid age: $1 (e.g. 3, 2w, 1m, 1y, today)"
+  },
+  "error_badSize": {
+    "message": "Invalid size: $1 (e.g. 100, 1.5M, 1G)"
+  },
+  "error_badStatus": {
+    "message": "Unknown status: $1"
+  },
+  "error_unknownOperator": {
+    "message": "Unknown operator: $1"
+  },
+  "error_badNumber": {
+    "message": "Not a valid calculation: $1"
+  },
+  "menuSearchFor": {
+    "message": "Expression Search"
+  },
+  "menuSearchFor_from": {
+    "message": "Messages from this sender"
+  },
+  "menuSearchFor_recipients": {
+    "message": "Messages to these recipients"
+  },
+  "menuSearchFor_subject": {
+    "message": "Messages with this subject"
+  },
+  "menuSearchFor_tags": {
+    "message": "Messages with these tags"
+  },
+  "menuSearchFor_date": {
+    "message": "Messages from this day"
+  },
+  "optionsTitle": {
+    "message": "Expression Search Reloaded options"
+  },
+  "sectionSearchBox": {
+    "message": "Search box"
+  },
+  "opt_hideNormalFilter": {
+    "message": "Hide the normal quick filter text box (Ctrl+Shift+K then focuses Expression Search)"
+  },
+  "opt_actAsNormalFilter": {
+    "message": "Act like the normal quick filter when the input contains no operators"
+  },
+  "opt_searchTimeout": {
+    "message": "Start searching after you stop typing for"
+  },
+  "opt_searchTimeoutHint": {
+    "message": "0 = only search when Enter is pressed"
+  },
+  "opt_selectFirstOnEnter": {
+    "message": "Select the first message after pressing Enter"
+  },
+  "opt_showHelp": {
+    "message": "Show the help popup while typing"
+  },
+  "opt_helpShowSeconds": {
+    "message": "Hide the help popup after"
+  },
+  "opt_helpHideSeconds": {
+    "message": "Hide the help popup after leaving the search box after"
+  },
+  "sectionSavedSearch": {
+    "message": "Saved search (Ctrl+Enter)"
+  },
+  "opt_virtualFolderParent": {
+    "message": "Create or update the \"ExpressionSearch\" saved search folder in"
+  },
+  "opt_virtualFolderParentDefault": {
+    "message": "The account of the current folder"
+  },
+  "opt_reuseExistingFolder": {
+    "message": "Keep the folders selected for an existing saved search (only update the search terms)"
+  },
+  "opt_virtualFolderInNewTab": {
+    "message": "Open the saved search in a new tab"
+  },
+  "sectionClickToSearch": {
+    "message": "Click to search"
+  },
+  "opt_c2sIntro": {
+    "message": "Hold a modifier key and right-click a subject, sender, recipient, tag or date in the message list to search for it. The message list context menu also has an \"Expression Search\" submenu."
+  },
+  "opt_c2sEnableCtrl": {
+    "message": "Ctrl + right-click searches"
+  },
+  "opt_c2sEnableShift": {
+    "message": "Shift + right-click searches"
+  },
+  "opt_c2sCtrlReplace": {
+    "message": "Apply the subject replacement below for Ctrl + right-click"
+  },
+  "opt_c2sShiftReplace": {
+    "message": "Apply the subject replacement below for Shift + right-click"
+  },
+  "opt_c2sRegexpMatch": {
+    "message": "Subject match (regular expression)"
+  },
+  "opt_c2sRegexpReplace": {
+    "message": "Replace with"
+  },
+  "opt_c2sReplaceHint": {
+    "message": "Example: match \"Bug (\\d+)\" replace \"Bug $1\". Several matches are combined with \"or\"."
+  },
+  "opt_c2sRemoveDomain": {
+    "message": "Remove the domain from e-mail addresses (search for \"fred\" instead of \"fred@example.com\")"
+  },
+  "sectionHeaders": {
+    "message": "Searchable headers (headerre:)"
+  },
+  "opt_customDBHeaders": {
+    "message": "Extra headers stored in the message database, separated by spaces"
+  },
+  "opt_customDBHeadersHint": {
+    "message": "Thunderbird only stores these headers for messages downloaded after the change; repair a folder (Folder Properties › Repair Folder) to include existing messages. This is a Thunderbird-wide setting."
+  },
+  "sectionAdvanced": {
+    "message": "Advanced"
+  },
+  "opt_verbose": {
+    "message": "Log searches to the Error Console (Ctrl+Shift+J)"
+  },
+  "openHelp": {
+    "message": "Help"
+  },
+  "resetDefaults": {
+    "message": "Restore defaults"
+  },
+  "saved": {
+    "message": "Saved"
+  },
+  "unitMs": {
+    "message": "ms"
+  },
+  "unitSeconds": {
+    "message": "seconds"
+  },
+  "invalidRegex": {
+    "message": "Invalid regular expression"
+  },
+  "invalidHeaders": {
+    "message": "Use header names (letters, digits and \"-\") separated by spaces"
+  },
+  "helpTitle": {
+    "message": "Expression Search Reloaded help"
+  },
+  "helpOpenOptions": {
+    "message": "Open the options"
+  }
+}

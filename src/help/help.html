@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Expression Search Reloaded – Help</title>
+  <link rel="stylesheet" href="help.css" />
+  <script src="help.js" defer></script>
+</head>
+<body>
+<main>
+<header>
+  <img src="../icons/icon.png" alt="" width="48" height="48" />
+  <div>
+    <h1>Expression Search Reloaded</h1>
+    <p>Gmail-like search expressions for Thunderbird's quick filter bar.
+      <button type="button" id="openOptions">Open the options</button></p>
+  </div>
+</header>
+
+<nav aria-label="Contents">
+  <a href="#quick-start">Quick start</a> ·
+  <a href="#operators">Operators</a> ·
+  <a href="#combining">Combining</a> ·
+  <a href="#keys">Keys</a> ·
+  <a href="#saved-search">Saved search</a> ·
+  <a href="#click-to-search">Click to search</a> ·
+  <a href="#filters">Filters</a> ·
+  <a href="#limitations">Limitations</a> ·
+  <a href="#privacy">Privacy</a> ·
+  <a href="#credits">Credits</a>
+</nav>
+
+<section id="quick-start">
+<h2>Quick start</h2>
+<p>Show the quick filter bar (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>K</kbd>, or the
+  filter button in the message list header) and type into the <em>Expression search</em> box.
+  The current folder is filtered while you type.</p>
+<ul>
+  <li><code>weekend plans</code> – messages with “weekend plans” in From, To, Cc or Subject.
+    With <em>Act like the normal quick filter</em> enabled (default), input without operators
+    behaves exactly like Thunderbird's own filter, including the Sender / Recipients / Subject / Body buttons.</li>
+  <li><code>from:fred to:tom a:yes</code> or <code>f:fred t:tom a:yes</code> – from Fred to Tom with an attachment.</li>
+  <li><code>s:invoice t:(alice -bob)</code> – subject contains “invoice”, sent to Alice but not to Bob.</li>
+  <li><code>f:(amazon or ebay) older_than:1y</code> – from Amazon or eBay, older than a year.</li>
+</ul>
+<p>A popup under the box explains the operator you are typing and shows how the expression was understood.
+  Click <strong>?</strong> next to the box to open this page.</p>
+</section>
+
+<section id="operators">
+<h2>Operators</h2>
+<p>An operator is a word followed by a colon, written in lower case (so that subjects such as
+  “Re: …” are not mistaken for the <code>re:</code> operator).</p>
+<table>
+  <thead><tr><th>Operator</th><th>Aliases</th><th>Finds messages where…</th><th>Examples</th></tr></thead>
+  <tbody>
+    <tr><td><code>from</code></td><td>f</td><td>From contains the text</td><td><code>from:mike</code></td></tr>
+    <tr><td><code>to</code></td><td>t, toorcc</td><td>To or Cc contains the text</td><td><code>t:bill</code></td></tr>
+    <tr><td><code>tonocc</code></td><td>tn</td><td>To (not Cc) contains the text</td><td><code>tn:bill</code></td></tr>
+    <tr><td><code>cc</code></td><td>c</td><td>Cc contains the text</td><td><code>cc:tom</code></td></tr>
+    <tr><td><code>bcc</code></td><td>bc</td><td>Bcc contains the text (only known for messages you sent)</td><td><code>bcc:riddle</code></td></tr>
+    <tr><td><code>fromto</code></td><td>ft, ftc, fromtocc, alladdresses</td><td>From, To, Cc or Bcc contains the text</td><td><code>ft:tom</code></td></tr>
+    <tr><td><code>only</code></td><td>o</td><td>the given people are the only To recipients; separate several with commas</td><td><code>only:tom</code>, <code>only:(tom,jerry)</code></td></tr>
+    <tr><td><code>subject</code></td><td>s</td><td>Subject contains the text</td><td><code>s:electric bill</code></td></tr>
+    <tr><td><code>simple</code></td><td></td><td>Subject contains the <em>rest of the input</em> literally, including ( ) " - characters; case sensitive</td><td><code>simple:Re: (urgent) - call me</code></td></tr>
+    <tr><td><code>regex</code></td><td>re, r, subre</td><td>Subject matches a regular expression (rest of the input)</td><td><code>re:/^\[jira\]/i</code></td></tr>
+    <tr><td><code>body</code></td><td>b</td><td>Body contains the text</td><td><code>b:tracking number</code></td></tr>
+    <tr><td><code>bodyre</code></td><td>br</td><td>Body matches a regular expression (rest of the input; offline messages only)</td><td><code>bodyre:/order #\d{6}/i</code></td></tr>
+    <tr><td><code>all</code></td><td>al</td><td>From, To, Cc, Subject or Body contains the text</td><td><code>all:weekend plans</code></td></tr>
+    <tr><td><code>fromre</code></td><td>fr</td><td>From matches a regular expression (rest of the input)</td><td><code>fr:/@example\.(com|org)>$/</code></td></tr>
+    <tr><td><code>tore</code></td><td>tr</td><td>To, Cc or Bcc matches a regular expression (rest of the input)</td><td><code>tr:^team-</code></td></tr>
+    <tr><td><code>headerre</code></td><td>h, hr</td><td>a header exists / matches a regular expression; see <a href="#limitations">limitations</a></td><td><code>h:list-id</code>, <code>h:List-Id=/all-test/i</code></td></tr>
+    <tr><td><code>attachment</code></td><td>a</td><td><code>yes</code>/<code>y</code>/<code>1</code>: has an attachment, <code>no</code>/<code>n</code>/<code>0</code>: has none; anything else works like <code>filename</code></td><td><code>a:yes</code>, <code>a:pdf</code></td></tr>
+    <tr><td><code>filename</code></td><td>fi, fn, file</td><td>an attachment name or MIME type contains the text (offline messages only)</td><td><code>fi:invoice.pdf</code>, <code>fn:msword</code></td></tr>
+    <tr><td><code>status</code></td><td>is, i, u</td><td>status: read, unread, replied, forwarded, starred (marked, flagged), new, deleted, attachment</td><td><code>is:unread</code>, <code>-is:replied</code></td></tr>
+    <tr><td><code>tag</code></td><td>l, label</td><td>tag name contains the text, or the <var>n</var>-th tag (<code>#2</code>); <code>na</code> means no tag</td><td><code>tag:important</code>, <code>tag:na</code></td></tr>
+    <tr><td><code>before</code> / <code>after</code></td><td>be / af</td><td>sent before/after a day, or a time of day on any day</td><td><code>af:2024/03/01</code>, <code>af:(9:00 -17:00)</code></td></tr>
+    <tr><td><code>date</code></td><td>d</td><td>the date (<code>yyyy/mm/dd hh:mm:ss</code> or your locale's format) contains the text</td><td><code>d:2024/03</code>, <code>d:" 13:"</code></td></tr>
+    <tr><td><code>older_than</code></td><td>days, age, ag, da, ot</td><td>older than <var>n</var> days; units d, w, m, y; <code>today</code>, <code>yesterday</code></td><td><code>older_than:2w</code>, <code>days:(3 -5)</code></td></tr>
+    <tr><td><code>newer_than</code></td><td>n, nt</td><td>newer than <var>n</var> days</td><td><code>n:7</code>, <code>nt:1y</code></td></tr>
+    <tr><td><code>size</code></td><td>si, larger</td><td>larger than <var>n</var> KB (K, M, G suffixes)</td><td><code>size:500</code>, <code>si:(0.5M -2M)</code></td></tr>
+    <tr><td><code>smaller</code></td><td>sm</td><td>smaller than <var>n</var> KB</td><td><code>sm:10</code></td></tr>
+    <tr><td><code>g:</code></td><td></td><td>at the very start: global (gloda) search in all indexed folders</td><td><code>g:weather</code></td></tr>
+  </tbody>
+</table>
+<p>Dates like <code>2024/03/01</code>, <code>2024-03-01 14:30</code> are local time; other formats are passed to
+  JavaScript's <code>Date</code> parser (e.g. <code>Mon, 25 Dec 1995 13:30:00 GMT</code>). Thunderbird compares
+  <code>before</code>/<code>after</code> dates by calendar day: <code>after:2024/03/01</code> finds messages from
+  March 2 on, and <code>af:(2024/03/01 -2024/03/09)</code> finds March 2–9. For times, use a time of day
+  (<code>af:9:00</code>) or <code>date:</code>.
+  Operators marked “rest of the input” take everything that follows them as their value, so they must come last.</p>
+</section>
+
+<section id="combining">
+<h2>Combining</h2>
+<ul>
+  <li>Terms next to each other must all match: <code>f:bob s:report</code>. You may write <code>and</code>.</li>
+  <li><code>or</code> (lower case) means either: <code>f:bob or f:dave</code>.</li>
+  <li><code>-</code> negates: <code>-f:spam</code>, <code>f:-spam</code>, <code>-(s:a or s:b)</code>.</li>
+  <li>Parentheses group, and an operator applies to a whole group: <code>t:(alice or bob)</code>, <code>f:(-foo -bar)</code>.</li>
+  <li>Words without operators form a phrase: <code>s:electric bill</code> searches for “electric bill”.</li>
+  <li>Double quotes make text literal: <code>s:"this or that"</code>.</li>
+  <li>The expression is combined with the other quick filter buttons (Unread, Starred, Tags, …) and with the
+    normal text filter (if shown); all of them must match.</li>
+</ul>
+<p>Any mix of <code>and</code>, <code>or</code> and <code>-</code> is evaluated correctly in the message list
+  (it is converted to the form Thunderbird's search engine understands). Extremely large combinations are rejected
+  with a message instead of slowing Thunderbird down.</p>
+<p><strong>Calculator:</strong> input that looks like arithmetic (<code>3*(4+5)</code>) is calculated when you press
+  <kbd>Enter</kbd>.</p>
+</section>
+
+<section id="keys">
+<h2>Keys</h2>
+<table>
+  <tbody>
+    <tr><th><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>K</kbd></th><td>Show the quick filter bar and focus the expression box (when the normal filter box is hidden, which is the default).</td></tr>
+    <tr><th><kbd>Enter</kbd></th><td>Search now (without waiting for the typing delay); optionally selects the first result.</td></tr>
+    <tr><th><kbd>Ctrl</kbd>+<kbd>Enter</kbd></th><td>Create or update the “ExpressionSearch” <a href="#saved-search">saved search</a> over all folders of the account.</td></tr>
+    <tr><th><kbd>Shift</kbd>+<kbd>Enter</kbd></th><td>Global search (gloda) for the words of the expression in all indexed folders.</td></tr>
+    <tr><th><kbd>↓</kbd></th><td>Move to the message list.</td></tr>
+    <tr><th><kbd>Esc</kbd></th><td>Clear the box; press again to clear the other quick filters / close the bar.</td></tr>
+  </tbody>
+</table>
+</section>
+
+<section id="saved-search">
+<h2>Saved search (Ctrl+Enter)</h2>
+<p>A saved search (virtual folder) shows the result of a search over many folders and is updated every time
+  you open it. <kbd>Ctrl</kbd>+<kbd>Enter</kbd> creates – or updates – a saved search called
+  <strong>ExpressionSearch</strong> for the current expression, searching all real folders of the current account.
+  Rename it to keep it; the next <kbd>Ctrl</kbd>+<kbd>Enter</kbd> then creates a new one.</p>
+<p>In the options you can choose the folder in which it is created, keep the folder selection of an existing
+  ExpressionSearch folder (edit its properties once to choose which folders it searches), and open it in a new tab.</p>
+</section>
+
+<section id="click-to-search">
+<h2>Click to search</h2>
+<p>Hold <kbd>Ctrl</kbd> (and, if enabled in the options, <kbd>Shift</kbd>) and right-click the subject, sender,
+  recipient, correspondent, tags or date of a message in the message list (table or cards view) to find
+  messages with the same value. The message list context menu also has an <em>Expression Search</em> submenu
+  for the same purpose.</p>
+<ul>
+  <li>Prefixes such as “Re:”, “Fwd:”, “AW:” and “[list-name]” are removed from subjects.</li>
+  <li>Optionally a regular expression rewrites the subject first. Several matches are combined with
+    <code>or</code>. Example: match <code>\[#(\d+)\]</code>, replace <code>$1</code>; subject
+    “[#1212][#2323] Some text” searches for <code>(1212 or 2323)</code>.</li>
+  <li>Optionally only the part before the “@” of e-mail addresses is used.</li>
+</ul>
+</section>
+
+<section id="filters">
+<h2>Message filters, search dialog and saved searches</h2>
+<p>The add-on also adds these search criteria to Thunderbird's filter editor, the Search Messages dialog and
+  saved search properties: <em>Bcc, To Somebody Only, Subject (RegEx), Subject (Long), Header (RegEx),
+  From (RegEx), Recipients (To/Cc/Bcc RegEx), Time (Every Day), Date Match, Attachment Name/Type,
+  Body (RegEx)</em>. Filters that use them need the add-on to be enabled.</p>
+</section>
+
+<section id="limitations">
+<h2>Limitations</h2>
+<ul>
+  <li><strong>Body, attachment name and body regex</strong> searches can only read messages that are stored
+    locally (Local Folders, or IMAP folders synchronised for offline use). The help popup tells you how many
+    messages could be searched. Regular expressions are run by Thunderbird itself; a pathological pattern on a
+    huge folder can make Thunderbird slow until it finishes.</li>
+  <li><strong>headerre</strong> only sees headers that Thunderbird stores in its message database. Add them in the
+    options (<em>Searchable headers</em>); existing messages are only included after <em>Repair Folder</em>.</li>
+  <li><strong>Saved searches</strong> store their terms in Thunderbird's own format, which cannot express
+    parentheses and is evaluated from left to right. One <code>or</code> group combined with other terms is
+    stored exactly; with two or more <code>or</code> groups (e.g. <code>f:(a or b) s:(c or d)</code>) the saved
+    search may show more messages than the message list, and the help popup says so.</li>
+  <li>After disabling or updating the add-on, criteria used in message filters keep their old behaviour until
+    Thunderbird is restarted (Thunderbird does not allow removing them earlier).</li>
+</ul>
+</section>
+
+<section id="privacy">
+<h2>Privacy</h2>
+<p>Everything happens inside Thunderbird. The add-on makes no network connections, collects no data and only
+  stores its settings locally. With <em>Log searches to the Error Console</em> enabled, your search expressions are
+  written to Thunderbird's console (which stays on your computer).</p>
+</section>
+
+<section id="changes">
+<h2>What changed in version 5 (compared with 2.4beta)</h2>
+<ul>
+  <li>Rewritten for Thunderbird 153 and later (new mail tab, quick filter bar, ES modules, Manifest V3).</li>
+  <li>Fixed: negated attachment-name, date and From/To regex searches; <code>y</code> (years) unit; tags that
+    match nothing; Ctrl+Enter and Shift+Enter; calculator negation; mixed and/or expressions; header names in
+    <code>headerre</code>.</li>
+  <li>Removed options that only applied to the old quick filter bar (moving the box to other toolbars, button
+    label and result label sizes) and the status bar icon; help and options are reachable from the
+    <strong>?</strong> button and the Add-ons Manager.</li>
+  <li>No more help/donation window at every start.</li>
+</ul>
+</section>
+
+<section id="credits">
+<h2>Credits and license</h2>
+<p>Expression Search Reloaded is an open-source continuation of Expression Search, maintained by Yevgen Trotsan.
+  It is based on: Ken Mixter – original GMailUI · Opera Wang – Expression Search / GMailUI (2010–2018) ·
+  Klaus Buecher (opto) – Expression Search NG for Thunderbird 78 (2.4beta) · savo_msu – One Click Search ·
+  Kent James – FiltaQuilla (ideas for the custom search terms).</p>
+<p>It is a separate add-on from <em>Expression Search NG</em> on addons.thunderbird.net (by opto); please do not install
+  both at the same time. Saved filters that use the Expression Search criteria keep working when you switch.</p>
+<p>Licensed under the GNU General Public License v3 (see LICENSE).
+  Source, issues and releases: <a href="https://github.com/BuenGenio/expression-search-reloaded" target="_blank" rel="noopener noreferrer">github.com/BuenGenio/expression-search-reloaded</a>.</p>
+</section>
+</main>
+</body>
+</html>

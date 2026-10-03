@@ -1,0 +1,108 @@
+/* Injected into about:3pane as an author sheet by the ExpressionSearch
+ * experiment (nsIDOMWindowUtils.loadSheetUsingURIString), removed on
+ * shutdown. Uses the same custom properties as Thunderbird's own search bar
+ * so that it follows the current theme (light/dark/high contrast). */
+
+#esr-search-container {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  flex: 1 1 auto;
+  min-inline-size: 14em;
+  max-inline-size: 640px;
+  margin: 3px;
+}
+
+#esr-search-textbox {
+  flex: 1;
+  min-inline-size: 0;
+  font-size: 1rem;
+  color: var(--search-bar-color, FieldText);
+  background-color: var(--search-bar-background, Field);
+  border: 1px solid var(--search-bar-border-color, ThreeDShadow);
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+  border-start-start-radius: var(--button-border-radius, 3px);
+  border-end-start-radius: var(--button-border-radius, 3px);
+  padding-block: 4px;
+  padding-inline: 6px;
+  margin: 0;
+}
+
+#esr-search-textbox:focus-visible {
+  outline: 2px solid var(--focus-outline-color, Highlight);
+  outline-offset: -1px;
+  background-color: var(--search-bar-focus-background, Field);
+}
+
+#esr-search-container.esr-error #esr-search-textbox {
+  border-color: var(--color-red-50, #e22850);
+}
+
+#esr-search-help-button {
+  flex: 0 0 auto;
+  min-inline-size: 2em;
+  margin: 0;
+  padding-inline: 6px;
+  font-weight: bold;
+  color: var(--search-bar-color, ButtonText);
+  background-color: var(--search-bar-background, ButtonFace);
+  border: 1px solid var(--search-bar-border-color, ThreeDShadow);
+  border-inline-start: none;
+  border-start-end-radius: var(--button-border-radius, 3px);
+  border-end-end-radius: var(--button-border-radius, 3px);
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+  cursor: pointer;
+}
+
+#esr-search-help-button:hover {
+  background-color: color-mix(in srgb, currentColor 10%, var(--search-bar-background, ButtonFace));
+}
+
+#esr-search-help {
+  position: absolute;
+  inset-block-start: calc(100% + 4px);
+  inset-inline-start: 0;
+  z-index: 100;
+  box-sizing: border-box;
+  min-inline-size: 100%;
+  max-inline-size: min(60em, 90vw);
+  padding: 6px 10px;
+  font-size: 0.9em;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  color: var(--arrowpanel-color, InfoText);
+  background-color: var(--arrowpanel-background, InfoBackground);
+  border: 1px solid var(--arrowpanel-border-color, ThreeDShadow);
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+#esr-search-help[hidden] {
+  display: none;
+}
+
+#esr-search-help > div:empty {
+  display: none;
+}
+
+#esr-search-help .es-help-token {
+  font-weight: bold;
+}
+
+#esr-search-help .es-help-matches,
+#esr-search-help .es-help-terms,
+#esr-search-help .es-help-stats {
+  opacity: 0.8;
+}
+
+#esr-search-help .es-help-error {
+  color: var(--color-red-50, #e22850);
+  font-weight: bold;
+}
+
+#qfb-qs-textbox.esr-normal-hidden {
+  display: none !important;
+}

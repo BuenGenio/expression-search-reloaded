@@ -1,0 +1,56 @@
+{
+  "manifest_version": 3,
+  "name": "__MSG_extensionName__",
+  "description": "__MSG_extensionDescription__",
+  "version": "5.0.0",
+  "author": "Yevgen Trotsan; based on work by Klaus Buecher, Opera Wang and Ken Mixter",
+  "homepage_url": "https://github.com/BuenGenio/expression-search-reloaded",
+  "default_locale": "en",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "expression-search-reloaded@buengenio.github.io",
+      "strict_min_version": "153.0",
+      "strict_max_version": "157.*"
+    }
+  },
+  "icons": {
+    "32": "icons/icon.png",
+    "48": "icons/icon.png",
+    "64": "icons/icon.png"
+  },
+  "permissions": [
+    "storage",
+    "menus",
+    "messagesRead",
+    "accountsRead"
+  ],
+  "background": {
+    "scripts": [
+      "shared/defaults.js",
+      "background.js"
+    ]
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": false
+  },
+  "experiment_apis": {
+    "ExpressionSearch": {
+      "schema": "api/ExpressionSearch/schema.json",
+      "parent": {
+        "scopes": [
+          "addon_parent"
+        ],
+        "paths": [
+          [
+            "ExpressionSearch"
+          ]
+        ],
+        "script": "api/ExpressionSearch/implementation.js",
+        "events": [
+          "startup"
+        ]
+      }
+    }
+  }
+}

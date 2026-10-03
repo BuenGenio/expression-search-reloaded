@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title data-i18n="optionsTitle">Expression Search options</title>
+  <link rel="stylesheet" href="options.css" />
+  <script src="../shared/defaults.js"></script>
+  <script src="options.js" defer></script>
+</head>
+<body>
+  <form id="options" autocomplete="off">
+    <fieldset>
+      <legend data-i18n="sectionSearchBox"></legend>
+      <label class="check"><input type="checkbox" name="hideNormalFilter" /> <span data-i18n="opt_hideNormalFilter"></span></label>
+      <label class="check"><input type="checkbox" name="actAsNormalFilter" /> <span data-i18n="opt_actAsNormalFilter"></span></label>
+      <label class="check"><input type="checkbox" name="selectFirstOnEnter" /> <span data-i18n="opt_selectFirstOnEnter"></span></label>
+      <label class="row">
+        <span data-i18n="opt_searchTimeout"></span>
+        <input type="number" name="searchTimeout" min="0" max="60000" step="100" />
+        <span data-i18n="unitMs"></span>
+      </label>
+      <p class="hint" data-i18n="opt_searchTimeoutHint"></p>
+      <label class="check"><input type="checkbox" name="showHelp" /> <span data-i18n="opt_showHelp"></span></label>
+      <label class="row indent">
+        <span data-i18n="opt_helpShowSeconds"></span>
+        <input type="number" name="helpShowSeconds" min="0" max="3600" />
+        <span data-i18n="unitSeconds"></span>
+      </label>
+      <label class="row indent">
+        <span data-i18n="opt_helpHideSeconds"></span>
+        <input type="number" name="helpHideSeconds" min="0" max="3600" />
+        <span data-i18n="unitSeconds"></span>
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <legend data-i18n="sectionSavedSearch"></legend>
+      <label class="column">
+        <span data-i18n="opt_virtualFolderParent"></span>
+        <select name="virtualFolderParent">
+          <option value="" data-i18n="opt_virtualFolderParentDefault"></option>
+        </select>
+      </label>
+      <label class="check"><input type="checkbox" name="reuseExistingFolder" /> <span data-i18n="opt_reuseExistingFolder"></span></label>
+      <label class="check"><input type="checkbox" name="virtualFolderInNewTab" /> <span data-i18n="opt_virtualFolderInNewTab"></span></label>
+    </fieldset>
+
+    <fieldset>
+      <legend data-i18n="sectionClickToSearch"></legend>
+      <p class="hint" data-i18n="opt_c2sIntro"></p>
+      <label class="check"><input type="checkbox" name="c2sEnableCtrl" /> <span data-i18n="opt_c2sEnableCtrl"></span></label>
+      <label class="check"><input type="checkbox" name="c2sEnableShift" /> <span data-i18n="opt_c2sEnableShift"></span></label>
+      <label class="check"><input type="checkbox" name="c2sCtrlReplace" /> <span data-i18n="opt_c2sCtrlReplace"></span></label>
+      <label class="check"><input type="checkbox" name="c2sShiftReplace" /> <span data-i18n="opt_c2sShiftReplace"></span></label>
+      <label class="column">
+        <span data-i18n="opt_c2sRegexpMatch"></span>
+        <input type="text" name="c2sRegexpMatch" spellcheck="false" maxlength="1024" />
+      </label>
+      <label class="column">
+        <span data-i18n="opt_c2sRegexpReplace"></span>
+        <input type="text" name="c2sRegexpReplace" spellcheck="false" maxlength="1024" />
+      </label>
+      <p class="hint" data-i18n="opt_c2sReplaceHint"></p>
+      <label class="check"><input type="checkbox" name="c2sRemoveDomain" /> <span data-i18n="opt_c2sRemoveDomain"></span></label>
+    </fieldset>
+
+    <fieldset>
+      <legend data-i18n="sectionHeaders"></legend>
+      <label class="column">
+        <span data-i18n="opt_customDBHeaders"></span>
+        <input type="text" id="customDBHeaders" spellcheck="false" maxlength="1024" placeholder="list-id x-mailer" />
+      </label>
+      <p class="hint" data-i18n="opt_customDBHeadersHint"></p>
+    </fieldset>
+
+    <fieldset>
+      <legend data-i18n="sectionAdvanced"></legend>
+      <label class="check"><input type="checkbox" name="verbose" /> <span data-i18n="opt_verbose"></span></label>
+    </fieldset>
+  </form>
+
+  <p class="actions">
+    <button type="button" id="openHelp" data-i18n="openHelp"></button>
+    <button type="button" id="reset" data-i18n="resetDefaults"></button>
+    <span id="status" role="status" aria-live="polite"></span>
+  </p>
+</body>
+</html>

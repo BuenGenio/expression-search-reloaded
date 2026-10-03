@@ -1,0 +1,15 @@
+{
+  "name": "expression-search-reloaded",
+  "version": "5.0.0",
+  "private": true,
+  "description": "Expression Search Reloaded - Thunderbird add-on (development scripts; no runtime dependencies)",
+  "license": "GPL-3.0-only",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test \"tests/unit/*.test.mjs\"",
+    "test:integration": "node tests/integration/run.mjs && node tests/integration/options.mjs",
+    "build": "node scripts/build.mjs"
+  }
+}
