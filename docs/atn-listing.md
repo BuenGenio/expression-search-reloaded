@@ -68,16 +68,31 @@ Upload in this order (from [`docs/screenshots/`](screenshots/); regenerate with 
 
 ## Version 5.0.1
 
-### Release notes
+### Release notes (ATN "Version notes")
 
 ```
-First release of Expression Search Reloaded — the classic expression search, rebuilt for Thunderbird 153–157.
+First release of Expression Search Reloaded: the classic Gmail-style expression search, rebuilt for Thunderbird 153–157.
 
+<b>New</b>
 <ul>
-<li>New: works with the current quick filter bar, table and cards view, and every mail tab and window</li>
-<li>New: live help popup, "Expression Search" context menu, searchable-headers option, settings taken over from Expression Search</li>
-<li>Fixed: mixed and/or expressions, several negations (-filename:, -date:, -fromre:, -tore:), header regex, "2y" ages, saved and global search (Ctrl/Shift+Enter)</li>
-<li>Safer: no web-accessible files, no privileged URL opener, text from messages can no longer inject search syntax</li>
+<li>Works with the current quick filter bar (table and cards view, every mail tab and window) and combines with the Unread / Starred / Contact / Tags / Attachment buttons</li>
+<li>Live help while typing: explains the operator and shows how the expression was understood; closes on Enter, Escape or when you leave the box</li>
+<li>"Expression Search" submenu in the message list context menu: same sender, recipients, subject, tags or day</li>
+<li>Options page, including the extra headers that headerre: can search</li>
+<li>Settings of Expression Search 2.x / NG are taken over on first install</li>
+</ul>
+<b>Fixed</b> (compared with Expression Search NG 2.4)
+<ul>
+<li>Mixed and/or expressions are evaluated correctly; saved searches warn when Thunderbird cannot store an expression exactly</li>
+<li>Negations work for -filename:, -a:name, -date:, -fromre: and -tore:; -before: / -after: are no longer off by one day</li>
+<li>headerre:Header=regex, older_than:2y, si: (size), tag: with an unknown name, calculator negation</li>
+<li>Ctrl+Enter (saved search) and Shift+Enter / g: (global search)</li>
+</ul>
+<b>Security and privacy</b>
+<ul>
+<li>No network access, no data collection</li>
+<li>No web-accessible files, no privileged URL opener; text taken from messages can no longer inject search syntax</li>
+<li>Limits on message size and expression complexity</li>
 </ul>
 Full changelog: <a href="https://github.com/BuenGenio/expression-search-reloaded/blob/main/CHANGELOG.md">CHANGELOG.md</a>
 ```
@@ -85,6 +100,8 @@ Full changelog: <a href="https://github.com/BuenGenio/expression-search-reloaded
 ### Notes for reviewers
 
 ```
+Test account: none needed. The add-on uses no website or online service; any mail folder with a few messages (Local Folders are fine) is enough to test it.
+
 Source: the package is the plain source (no build step besides zipping): https://github.com/BuenGenio/expression-search-reloaded (tag v5.0.1). An audit of the add-on this is based on, and the reasons for each design decision, are in AUDIT.md.
 
 Why an Experiment: there is no WebExtension API to (1) add an input to the quick filter bar of about:3pane, (2) register nsIMsgSearchCustomTerm search criteria, (3) create saved searches (virtual folders) from search terms. The Experiment (api/ExpressionSearch/) only does these things; settings, options/help pages and the context menu use WebExtension APIs. It uses QuickFilterManager.defineFilter() (Thunderbird's extension point) instead of patching Thunderbird code, and removes everything on disable (custom terms are deactivated, as they cannot be unregistered).
