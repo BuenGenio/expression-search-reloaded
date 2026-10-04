@@ -66,7 +66,7 @@ Upload in this order (from [`docs/screenshots/`](screenshots/); regenerate with 
 | `3-options.png` | Options: typing behaviour, saved searches, click-to-search and searchable headers. |
 | `4-help.png` | The built-in guide lists all operators with examples. |
 
-## Version 5.0.1
+## Version 5.0.2 (first ATN release)
 
 ### Release notes (ATN "Version notes")
 
@@ -102,7 +102,7 @@ Full changelog: <a href="https://github.com/BuenGenio/expression-search-reloaded
 ```
 Test account: none needed. The add-on uses no website or online service; any mail folder with a few messages (Local Folders are fine) is enough to test it.
 
-Source: the package is the plain source (no build step besides zipping): https://github.com/BuenGenio/expression-search-reloaded (tag v5.0.1). An audit of the add-on this is based on, and the reasons for each design decision, are in AUDIT.md.
+Source: the package is the plain source (no build step besides zipping): https://github.com/BuenGenio/expression-search-reloaded (tag v5.0.2). An audit of the add-on this is based on, and the reasons for each design decision, are in AUDIT.md.
 
 Why an Experiment: there is no WebExtension API to (1) add an input to the quick filter bar of about:3pane, (2) register nsIMsgSearchCustomTerm search criteria, (3) create saved searches (virtual folders) from search terms. The Experiment (api/ExpressionSearch/) only does these things; settings, options/help pages and the context menu use WebExtension APIs. It uses QuickFilterManager.defineFilter() (Thunderbird's extension point) instead of patching Thunderbird code, and removes everything on disable (custom terms are deactivated, as they cannot be unregistered).
 
@@ -111,6 +111,8 @@ Security: no network access, no remote code, no eval/innerHTML, no web-accessibl
 Permissions: storage (settings), menus + messagesRead (message list context menu: search by sender/subject/…), accountsRead (choose the folder for saved searches in the options).
 
 How to test: open a folder, show the quick filter bar (Ctrl+Shift+K), type "f:<some sender>" or "s:(word1 or word2) -is:read" into the Expression Search box; Ctrl+right-click a sender in the message list; press "?" for the help page. Automated tests: npm test; npm run test:integration (headless Thunderbird via Marionette).
+
+Validator: "Invalid permissions messagesRead / accountsRead" are Thunderbird permissions that the Firefox-based linter does not know; both are used (see Permissions). strict_max_version is intentional: the Experiment depends on Thunderbird internals, and every new release is tested in CI before the maximum is raised.
 
 The name: this is an open-source continuation (GPL v3) of Expression Search / GMailUI by Opera Wang and Expression Search NG 2.4 by Klaus Buecher, credited in the description, help page and README; it has its own add-on id.
 ```

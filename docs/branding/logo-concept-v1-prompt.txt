@@ -1,0 +1,12 @@
+Generation mode: built-in image_gen
+
+Use case: logo-brand
+Asset type: Standalone square app icon / logo for Expression Search Reloaded, a Thunderbird add-on for powerful expression-based email search.
+Primary request: Create a beautiful modern skeuomorphic logo, combining a magnifying glass and an email envelope into one cohesive, unmistakable silhouette. This is an original extension identity.
+Subject: One substantial circular magnifying glass with a short handle angled toward the lower right, overlapping one small sculpted closed envelope. The envelope is tucked behind the lens but its simple V-shaped flap is clearly recognizable through the glass. The lens is the dominant form, the envelope the quiet secondary form. Integrate them as one compact, well-balanced emblem, not separate floating objects.
+Style/medium: Sophisticated, carefully art-directed 3D app icon. Modern skeuomorphism with restrained realistic materials, precise rounded bevels, tactile surfaces, beautiful glass refraction, and softly sculpted depth. Clean and iconic, not a busy illustration.
+Materials/colors: Deep teal anodized metal lens rim and handle, subtle pale silver inner bevel, clear lightly ice-blue convex glass, pearly white envelope with gentle cool-blue shading. Build on the add-on's existing green magnifier heritage with a restrained teal-to-blue palette appropriate to Thunderbird.
+Composition/framing: One centered emblem, nearly front-facing with a slight three-quarter depth, occupying approximately 82 percent of a square canvas. Strong silhouette, substantial forms and bold envelope folds that remain readable at 32 to 64 pixels. Entire object fully inside canvas with balanced breathing room.
+Lighting/mood: Soft studio lighting from upper left, controlled satin reflections and one graceful glass highlight, subtle contact shading between parts.
+Scene/backdrop: Genuinely transparent background with alpha; isolated cutout, no background color, no backdrop tile, no floor or surrounding scene. No checkerboard drawn into the image.
+Constraints: No words, no letters, no monogram, no numbers, no UI, no decorative particles, no extra symbols, no bird mascot, no watermark, no presentation board. Avoid chrome excess, hard glare, tiny details, multiple envelopes, multiple lenses. Render one finished high-resolution square logo only.

@@ -45,6 +45,16 @@ test("manifest", () => {
   assert.ok(!m.permissions.some(p => /:\/\//.test(p) || p == "<all_urls>"), "no host permissions");
 });
 
+test("manifest icons have the size they are declared with", () => {
+  const m = JSON.parse(read(path.join(src, "manifest.json")));
+  for (const [size, file] of Object.entries(m.icons)) {
+    const png = fs.readFileSync(path.join(src, file));
+    assert.equal(png.toString("ascii", 12, 16), "IHDR", `${file} is a PNG`);
+    assert.equal(png.readUInt32BE(16), Number(size), `${file} width`);
+    assert.equal(png.readUInt32BE(20), Number(size), `${file} height`);
+  }
+});
+
 test("every referenced locale key exists in en", () => {
   const keys = new Set();
   for (const f of textFiles) {

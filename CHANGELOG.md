@@ -2,6 +2,12 @@
 
 All notable changes are documented here. Versions follow [semantic versioning](https://semver.org/).
 
+## 5.0.2 – 2026-10-04
+
+### Changed
+* New icon: a teal magnifying glass over an envelope, in all sizes Thunderbird and addons.thunderbird.net use
+  (32–128 px). Source artwork in `docs/branding/`.
+
 ## 5.0.1 – 2026-10-04
 
 ### Fixed

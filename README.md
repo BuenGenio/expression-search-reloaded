@@ -1,4 +1,4 @@
-# Expression Search Reloaded
+# <img src="src/icons/icon-128.png" alt="" width="64" height="64" align="top"> Expression Search Reloaded
 
 [![CI](https://github.com/BuenGenio/expression-search-reloaded/actions/workflows/ci.yml/badge.svg)](https://github.com/BuenGenio/expression-search-reloaded/actions/workflows/ci.yml)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)

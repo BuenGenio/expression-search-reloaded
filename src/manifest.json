@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "__MSG_extensionName__",
   "description": "__MSG_extensionDescription__",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "author": "Yevgen Trotsan; based on work by Klaus Buecher, Opera Wang and Ken Mixter",
   "homepage_url": "https://github.com/BuenGenio/expression-search-reloaded",
   "default_locale": "en",
@@ -14,9 +14,11 @@
     }
   },
   "icons": {
-    "32": "icons/icon.png",
-    "48": "icons/icon.png",
-    "64": "icons/icon.png"
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "64": "icons/icon-64.png",
+    "96": "icons/icon-96.png",
+    "128": "icons/icon-128.png"
   },
   "permissions": [
     "storage",
