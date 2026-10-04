@@ -108,6 +108,32 @@ var ExpressionSearchTerms = (function () {
   }
 
   /**
+   * Text that identifies the account of a folder's server: the account name
+   * plus the addresses and names of its identities, lower-cased. Cached per
+   * server for a short time (searches call this for every message).
+   */
+  const accountTextCache = new WeakMap();
+  function accountText(server) {
+    if (!server) {
+      return "";
+    }
+    const now = Date.now();
+    const cached = accountTextCache.get(server);
+    if (cached && now - cached.time < 30000) {
+      return cached.text;
+    }
+    const parts = [server.prettyName];
+    try {
+      for (const identity of MailServices.accounts.getIdentitiesForServer(server)) {
+        parts.push(identity.email, identity.fullName);
+      }
+    } catch (e) {}
+    const text = parts.filter(Boolean).join("\n").toLowerCase();
+    accountTextCache.set(server, { text, time: now });
+    return text;
+  }
+
+  /**
    * Statistics of the last body search, shown to the user: messages without
    * an offline copy cannot be searched by body terms.
    */
@@ -411,6 +437,11 @@ var ExpressionSearchTerms = (function () {
         const result = `${date} ${time}`.includes(value) || locale.includes(value);
         return apply(result, op, Op.DoesntContain);
       }),
+
+      // "acc:work": the account name or one of its addresses contains "work".
+      account: term(localize("term_account"), CONTAINS_OPS, (hdr, value, op) =>
+        apply(accountText(hdr.folder?.server).includes(value.toLowerCase()), op, Op.DoesntContain)
+      ),
 
       attachmentNameOrType: bodyTerm(
         localize("term_attachmentNameOrType"),

@@ -27,6 +27,7 @@
     selectFirstOnEnter: [false, "boolean"],
     showHelp: [true, "boolean"],
     helpShowSeconds: [10, "integer", 0, 3600],
+    showUnrepliedButton: [true, "boolean"],
     // Saved search (Ctrl+Enter)
     virtualFolderParent: ["", "string"],
     reuseExistingFolder: [false, "boolean"],

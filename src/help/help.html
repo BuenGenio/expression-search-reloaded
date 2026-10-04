@@ -62,6 +62,7 @@
     <tr><td><code>tonocc</code></td><td>tn</td><td>To (not Cc) contains the text</td><td><code>tn:bill</code></td></tr>
     <tr><td><code>cc</code></td><td>c</td><td>Cc contains the text</td><td><code>cc:tom</code></td></tr>
     <tr><td><code>bcc</code></td><td>bc</td><td>Bcc contains the text (only known for messages you sent)</td><td><code>bcc:riddle</code></td></tr>
+    <tr><td><code>account</code></td><td>acc</td><td>the account name or one of its e-mail addresses contains the text; useful in unified folders and saved searches over several accounts</td><td><code>acc:work</code>, <code>-acc:private</code></td></tr>
     <tr><td><code>fromto</code></td><td>ft, ftc, fromtocc, alladdresses</td><td>From, To, Cc or Bcc contains the text</td><td><code>ft:tom</code></td></tr>
     <tr><td><code>only</code></td><td>o</td><td>the given people are the only To recipients; separate several with commas</td><td><code>only:tom</code>, <code>only:(tom,jerry)</code></td></tr>
     <tr><td><code>subject</code></td><td>s</td><td>Subject contains the text</td><td><code>s:electric bill</code></td></tr>
@@ -75,7 +76,7 @@
     <tr><td><code>headerre</code></td><td>h, hr</td><td>a header exists / matches a regular expression; see <a href="#limitations">limitations</a></td><td><code>h:list-id</code>, <code>h:List-Id=/all-test/i</code></td></tr>
     <tr><td><code>attachment</code></td><td>a</td><td><code>yes</code>/<code>y</code>/<code>1</code>: has an attachment, <code>no</code>/<code>n</code>/<code>0</code>: has none; anything else works like <code>filename</code></td><td><code>a:yes</code>, <code>a:pdf</code></td></tr>
     <tr><td><code>filename</code></td><td>fi, fn, file</td><td>an attachment name or MIME type contains the text (offline messages only)</td><td><code>fi:invoice.pdf</code>, <code>fn:msword</code></td></tr>
-    <tr><td><code>status</code></td><td>is, i, u</td><td>status: read, unread, replied, forwarded, starred (marked, flagged), new, deleted, attachment</td><td><code>is:unread</code>, <code>-is:replied</code></td></tr>
+    <tr><td><code>status</code></td><td>is, i, u</td><td>status: read, unread, replied, unreplied, forwarded, starred (marked, flagged), unstarred, new, deleted, attachment</td><td><code>is:unread</code>, <code>is:unreplied</code></td></tr>
     <tr><td><code>tag</code></td><td>l, label</td><td>tag name contains the text, or the <var>n</var>-th tag (<code>#2</code>); <code>na</code> means no tag</td><td><code>tag:important</code>, <code>tag:na</code></td></tr>
     <tr><td><code>before</code> / <code>after</code></td><td>be / af</td><td>sent before/after a day, or a time of day on any day</td><td><code>af:2024/03/01</code>, <code>af:(9:00 -17:00)</code></td></tr>
     <tr><td><code>date</code></td><td>d</td><td>the date (<code>yyyy/mm/dd hh:mm:ss</code> or your locale's format) contains the text</td><td><code>d:2024/03</code>, <code>d:" 13:"</code></td></tr>
@@ -104,7 +105,8 @@
   <li>Words without operators form a phrase: <code>s:electric bill</code> searches for “electric bill”.</li>
   <li>Double quotes make text literal: <code>s:"this or that"</code>.</li>
   <li>The expression is combined with the other quick filter buttons (Unread, Starred, Tags, …) and with the
-    normal text filter (if shown); all of them must match.</li>
+    normal text filter (if shown); all of them must match. The add-on adds an <strong>Unreplied</strong> button
+    there too (it can be hidden in the options).</li>
 </ul>
 <p>Any mix of <code>and</code>, <code>or</code> and <code>-</code> is evaluated correctly in the message list
   (it is converted to the form Thunderbird's search engine understands). Extremely large combinations are rejected
@@ -157,7 +159,7 @@
 <p>The add-on also adds these search criteria to Thunderbird's filter editor, the Search Messages dialog and
   saved search properties: <em>Bcc, To Somebody Only, Subject (RegEx), Subject (Long), Header (RegEx),
   From (RegEx), Recipients (To/Cc/Bcc RegEx), Time (Every Day), Date Match, Attachment Name/Type,
-  Body (RegEx)</em>. Filters that use them need the add-on to be enabled.</p>
+  Body (RegEx), Account</em>. Filters that use them need the add-on to be enabled.</p>
 </section>
 
 <section id="limitations">

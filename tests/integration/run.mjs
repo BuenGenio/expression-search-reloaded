@@ -68,6 +68,11 @@ const CASES = [
   ["-is:unread", not(["M03"])],
   ["is:starred", ["M05"]],
   ["is:replied", ["M02"]],
+  ["is:unreplied", not(["M02"])],
+  ["acc:local", ALL],
+  ["acc:no-such-account", []],
+  ["-acc:local", []],
+  ["account:(local or work) f:alice", ["M01", "M06"]],
   ["before:2024/01/01", ["M03"]],
   ["after:2025/01/01", ["M04", "M05", "M06"]],
   // Thunderbird compares dates by day: after 03-01 and not after 03-02.
@@ -156,7 +161,7 @@ try {
 
   await check("custom search terms registered", async () => {
     const terms = await run("return ES_TEST.customTermState();");
-    assert.equal(terms.length, 11);
+    assert.equal(terms.length, 12);
     assert.ok(terms.every(([, active]) => active));
   });
 
@@ -170,6 +175,39 @@ try {
   await run("return ES_TEST.clear();");
 
   console.log("Behaviour");
+  await check("Unreplied button and menu item filter, combine and can be hidden", async () => {
+    const r = await run(`
+      const a3 = ES_TEST.about3Pane;
+      const doc = a3.document;
+      const button = doc.getElementById("esr-qfb-unreplied");
+      const state = { inGroup: !!button?.closest(".quickFilterButtons"), menuItem: !!doc.getElementById("esr-qfb-menu-unreplied") };
+      button.click();
+      await ES_TEST.settle();
+      state.pressed = button.pressed;
+      state.unreplied = ES_TEST.listed();
+      state.combined = await ES_TEST.search("f:bob");
+      await ES_TEST.clear();
+      button.click();
+      await ES_TEST.settle();
+      state.off = ES_TEST.listed();
+      const api = ES_TEST.api();
+      api.getController().setOptions({ showUnrepliedButton: false });
+      state.hidden = !doc.getElementById("esr-qfb-unreplied") && !doc.getElementById("esr-qfb-menu-unreplied");
+      api.getController().setOptions({});
+      state.back = !!doc.getElementById("esr-qfb-unreplied");
+      return state;`);
+    assert.deepEqual(r, {
+      inGroup: true,
+      menuItem: true,
+      pressed: true,
+      unreplied: not(["M02"]),
+      combined: [],
+      off: ALL,
+      hidden: true,
+      back: true,
+    });
+  });
+
   await check("help popup explains the operator being typed", async () => {
     const r = await run(`
       const input = ES_TEST.input;
@@ -517,8 +555,10 @@ try {
         box: !!doc.getElementById("esr-search-container"),
         normalHidden: doc.getElementById("qfb-qs-textbox").classList.contains("esr-normal-hidden"),
         textBoxDomId: ES_TEST.QuickFilterManager.textBoxDomId,
-        filterDefined: !!ES_TEST.QuickFilterManager.filterDefsByName.expressionSearchReloaded,
-        stateLeft: "expressionSearchReloaded" in a3.quickFilterBar.filterer.filterValues,
+        filterDefined: !!ES_TEST.QuickFilterManager.filterDefsByName.expressionSearchReloaded ||
+          !!ES_TEST.QuickFilterManager.filterDefsByName.expressionSearchReloadedUnreplied,
+        stateLeft: Object.keys(a3.quickFilterBar.filterer.filterValues).some(k => k.startsWith("expressionSearchReloaded")),
+        unrepliedButton: !!doc.getElementById("esr-qfb-unreplied"),
         listed: ES_TEST.listed(),
         terms: ES_TEST.customTermState(),
       };
@@ -536,6 +576,7 @@ try {
     assert.equal(r.textBoxDomId, "qfb-qs-textbox");
     assert.equal(r.filterDefined, false);
     assert.equal(r.stateLeft, false);
+    assert.equal(r.unrepliedButton, false);
     assert.deepEqual(r.listed, ALL);
     assert.ok(r.terms.every(([, active]) => !active), "custom terms deactivated");
     assert.deepEqual(r.starred, ["M05"]);

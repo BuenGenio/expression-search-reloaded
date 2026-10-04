@@ -62,6 +62,7 @@
     status: ["u", "is", "i"],
     all: ["al"],
     fromto: ["ft", "ftc", "fromtocc", "alladdresses"],
+    account: ["acc"],
     gloda: ["g"],
   };
 
@@ -480,6 +481,7 @@
     bodyre: "expressionsearch#bodyRegex",
     fromre: "expressionsearch#fromRegex",
     tore: "expressionsearch#toRegex",
+    account: "expressionsearch#account",
   };
 
   const HEADER_ATTRIBS = {
@@ -621,6 +623,8 @@
   function parseStatus(value) {
     const v = value.trim();
     const table = [
+      [/^unrep/i, "Replied", true],
+      [/^un(star|fl)/i, "Marked", true],
       [/^unr/i, "Read", true],
       [/^rep/i, "Replied", false],
       [/^rea/i, "Read", false],
@@ -676,6 +680,7 @@
       case "simple":
       case "filename":
       case "date":
+      case "account":
         return {
           ...d,
           attrib: "Custom",

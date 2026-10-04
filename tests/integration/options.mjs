@@ -55,7 +55,7 @@ try {
     ES_TEST.optionsTab = tab;
     await ES_TEST.waitFor(() => {
       const doc = tab.browser.contentDocument;
-      return doc?.readyState == "complete" && doc.querySelector("select[name=virtualFolderParent]")?.options.length > 1 && doc;
+      return doc?.readyState == "complete" && doc.documentElement.dataset.ready == "true" && doc;
     }, "options page populated");
     ES_TEST.optDoc = () => tab.browser.contentDocument;
   `);

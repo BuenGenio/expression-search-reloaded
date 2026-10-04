@@ -156,6 +156,13 @@ test("status", () => {
   assert.deepEqual(cnf("u:new"), [["MsgStatus Is New"]]);
   assert.deepEqual(cnf("i:deleted"), [["MsgStatus Is IMAPDeleted"]]);
   assert.equal(P.compile("is:bogus").errors[0].code, "badStatus");
+  // #5: unreplied (and the other "un-" states)
+  assert.deepEqual(cnf("is:unreplied"), [["MsgStatus Isnt Replied"]]);
+  assert.deepEqual(cnf("status:unreplied"), [["MsgStatus Isnt Replied"]]);
+  assert.deepEqual(cnf("-is:unreplied"), [["MsgStatus Is Replied"]]);
+  assert.deepEqual(cnf("is:unstarred"), [["MsgStatus Isnt Marked"]]);
+  assert.deepEqual(cnf("is:unflagged"), [["MsgStatus Isnt Marked"]]);
+  assert.deepEqual(cnf("is:unread"), [["MsgStatus Isnt Read"]]);
 });
 
 test("size", () => {
@@ -202,6 +209,14 @@ test("dates are local time and validated", () => {
 test("time of day uses the dayTime term (documented 'between 3 and 4' example)", () => {
   assert.deepEqual(cnf("af:(3:0 -4:0)"), [["dayTime IsAfter 03:00:00"], ["dayTime IsBefore 04:00:00"]]);
   assert.equal(P.compile("before:25:00").errors[0].code, "badTime");
+});
+
+test("account operator (#6)", () => {
+  assert.deepEqual(cnf("acc:work"), [["account Contains work"]]);
+  assert.deepEqual(cnf("account:work"), [["account Contains work"]]);
+  assert.deepEqual(cnf("-acc:work f:bob"), [["account DoesntContain work"], ["Sender Contains bob"]]);
+  assert.deepEqual(cnf("acc:(work or private)"), [["account Contains work", "account Contains private"]]);
+  assert.equal(P.compile("acc:work").hasOperators, true);
 });
 
 test("date match and tags", () => {

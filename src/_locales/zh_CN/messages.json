@@ -184,5 +184,11 @@
   },
   "openHelp": {
     "message": "帮助"
+  },
+  "term_account": {
+    "message": "账户"
+  },
+  "unrepliedButtonLabel": {
+    "message": "未回复"
   }
 }

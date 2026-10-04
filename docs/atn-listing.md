@@ -36,14 +36,15 @@ Search your mail the way you think: type an <b>expression</b> into the quick fil
 
 <b>Features</b>
 <ul>
-<li>28 operators: from, to, cc, bcc, only, subject, body, all, attachment, filename, tag, status (is:unread, is:starred, …), before/after (dates and time of day), date, older_than/newer_than, size/smaller, header — with short aliases (f:, t:, s:, a:, …)</li>
+<li>29 operators: from, to, cc, bcc, only, subject, body, all, attachment, filename, tag, account, status (is:unread, is:unreplied, is:starred, …), before/after (dates and time of day), date, older_than/newer_than, size/smaller, header — with short aliases (f:, t:, s:, a:, …)</li>
 <li><b>and</b>, <b>or</b>, <b>-</b> (not), parentheses and quotes, evaluated correctly in any combination</li>
 <li>Regular expressions for subject, sender, recipients, headers and body</li>
 <li>Works together with Thunderbird's Unread / Starred / Contact / Tags / Attachment buttons; Ctrl+Shift+K focuses the box</li>
 <li>Live help while you type: explains the operator and shows how the expression was understood</li>
 <li><b>Click to search</b>: Ctrl+right-click a subject, sender, recipient, tag or date — or use the "Expression Search" context menu</li>
 <li><b>Ctrl+Enter</b> turns the expression into a saved search across the whole account; <b>Shift+Enter</b> runs a global search</li>
-<li>Adds 11 criteria (Subject/From/Recipients/Body/Header RegEx, Bcc, attachment name, time of day, …) to message filters and the Search Messages dialog</li>
+<li>An "Unreplied" button in the quick filter bar</li>
+<li>Adds 12 criteria (Subject/From/Recipients/Body/Header RegEx, Bcc, attachment name, time of day, account, …) to message filters and the Search Messages dialog</li>
 <li>A built-in calculator: <code>3*(4+5)</code> + Enter</li>
 </ul>
 <b>Privacy</b>: no network access, no data collection. Everything runs inside Thunderbird; settings stay in your profile.

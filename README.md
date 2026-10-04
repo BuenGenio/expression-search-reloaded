@@ -28,14 +28,15 @@ for current Thunderbird releases.
 * Operators for addresses, subject, body, dates, age, size, status, tags and attachments, with regular-expression
   variants: `from:`, `to:`, `cc:`, `bcc:`, `only:`, `subject:`, `simple:`, `regex:`, `body:`, `bodyre:`,
   `headerre:`, `a:`, `filename:`, `is:`, `tag:`, `before:`, `after:`, `date:`, `older_than:`, `newer_than:`,
-  `size:`, `smaller:` …
+  `size:`, `smaller:`, `account:` …
 * `and`, `or`, `-` (not), parentheses and quotes. Any combination is evaluated correctly.
 * **Enter** searches now, **Ctrl+Enter** creates a saved search over the whole account, **Shift+Enter** runs a
   global (gloda) search, and arithmetic like `3*(4+5)` is calculated.
 * **Click to search:** Ctrl+right-click a subject, sender, recipient, tag or date in the message list, or use the
   *Expression Search* context submenu.
-* Eleven extra search criteria for message filters, the Search Messages dialog and saved searches. They include
-  Subject/From/Recipients/Body/Header RegEx, Bcc, attachment name or type, and time of day.
+* An *Unreplied* button in the quick filter bar, and `is:unreplied`.
+* Twelve extra search criteria for message filters, the Search Messages dialog and saved searches. They include
+  Subject/From/Recipients/Body/Header RegEx, Bcc, attachment name or type, time of day and account.
 * No network access and no data collection. See [SECURITY.md](SECURITY.md).
 
 ## Installation

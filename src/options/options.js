@@ -163,6 +163,8 @@ async function init() {
   document.getElementById("openHelp").addEventListener("click", () => {
     messenger.tabs.create({ url: "/help/help.html" });
   });
+  // Rendered and listening (used by the tests).
+  document.documentElement.dataset.ready = "true";
 }
 
 init();

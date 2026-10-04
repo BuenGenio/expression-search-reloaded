@@ -51,6 +51,12 @@
   "glodaDisabled": {
     "message": "Global search is disabled (Settings › General › Global Search and Indexer)."
   },
+  "unrepliedButtonLabel": {
+    "message": "Unreplied"
+  },
+  "unrepliedButtonTooltip": {
+    "message": "Show only messages that have not been replied to"
+  },
   "term_Bcc": {
     "message": "Bcc"
   },
@@ -84,8 +90,14 @@
   "term_bodyRegex": {
     "message": "Body (RegEx)"
   },
+  "term_account": {
+    "message": "Account (name or address)"
+  },
   "info_after": {
     "message": "after:2011/03/10   af:(2011/03/01 -2011/03/09)   after:Mon, 25 Dec 1995 13:30:00 GMT\naf:(3:00 -4:00) finds messages sent between 3 and 4 o'clock on any day"
+  },
+  "info_account": {
+    "message": "acc:work — the account name or one of its addresses contains the text (useful in unified folders and saved searches)"
   },
   "info_all": {
     "message": "Searches From, To, Cc, Subject and the body"
@@ -151,7 +163,7 @@
     "message": "smaller:1G or sm:1024 — size less than"
   },
   "info_status": {
-    "message": "is:replied, is:unread, is:starred, status:forwarded — Read, Unread, Replied, Starred/Flagged, Forwarded, New, Deleted, Attachment"
+    "message": "is:replied, is:unread, is:unreplied, is:starred, status:forwarded — Read, Unread, Replied, Unreplied, Starred/Flagged, Unstarred, Forwarded, New, Deleted, Attachment"
   },
   "info_subject": {
     "message": "subject:(hello -world) — subject contains hello but not world"
@@ -242,6 +254,9 @@
   },
   "opt_selectFirstOnEnter": {
     "message": "Select the first message after pressing Enter"
+  },
+  "opt_showUnrepliedButton": {
+    "message": "Show an “Unreplied” button in the quick filter bar"
   },
   "opt_showHelp": {
     "message": "Show the help popup while typing (it closes on Enter, when you leave the box or select a message)"

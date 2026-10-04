@@ -2,6 +2,16 @@
 
 All notable changes are documented here. Versions follow [semantic versioning](https://semver.org/).
 
+## 5.1.0 – 2026-10-04
+
+### Added
+* `is:unreplied` (also `status:unreplied`) and an **Unreplied** button in the quick filter bar, with an entry in the
+  quick filter menu of narrow windows; the button can be hidden in the options (#5). `is:unstarred` /
+  `is:unflagged` as well.
+* `account:` / `acc:` operator: the account name or one of its addresses contains the text, e.g. `acc:work` in a
+  unified folder or a saved search across accounts (#6). Also available as the *Account* criterion in message
+  filters and the Search Messages dialog.
+
 ## 5.0.2 – 2026-10-04
 
 ### Changed

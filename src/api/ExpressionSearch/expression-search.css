@@ -103,6 +103,10 @@
   font-weight: bold;
 }
 
+#esr-qfb-unreplied {
+  background-image: var(--icon-reply);
+}
+
 #qfb-qs-textbox.esr-normal-hidden {
   display: none !important;
 }

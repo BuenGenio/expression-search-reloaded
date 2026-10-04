@@ -45,6 +45,10 @@ ChromeUtils.defineESModuleGetters(lazy, {
 });
 
 const FILTER_NAME = "expressionSearchReloaded";
+const UNREPLIED_FILTER = "expressionSearchReloadedUnreplied";
+const UNREPLIED_BUTTON_ID = "esr-qfb-unreplied";
+const UNREPLIED_MENUITEM_ID = "esr-qfb-menu-unreplied";
+const OUR_FILTERS = [FILTER_NAME, UNREPLIED_FILTER];
 const CONTAINER_ID = "esr-search-container";
 const INPUT_ID = "esr-search-textbox";
 const HELP_ID = "esr-search-help";
@@ -215,6 +219,7 @@ class Pane {
       return;
     }
     try {
+      this.removeUnrepliedButton(false);
       this.box?.remove();
       this.normal?.classList.remove("esr-normal-hidden");
       this.win.windowUtils.removeSheetUsingURIString(
@@ -227,9 +232,11 @@ class Pane {
     // Drop our state from the quick filter so that nothing refers to the
     // filter definition after it has been removed.
     const qfb = this.qfb;
-    if (qfb?._filterer && FILTER_NAME in qfb._filterer.filterValues) {
+    if (qfb?._filterer && OUR_FILTERS.some(name => name in qfb._filterer.filterValues)) {
       const values = { ...qfb._filterer.filterValues };
-      delete values[FILTER_NAME];
+      for (const name of OUR_FILTERS) {
+        delete values[name];
+      }
       qfb._filterer = new this.win.QuickFilterState(null, {
         filterValues: values,
         visible: qfb._filterer.visible,
@@ -254,6 +261,88 @@ class Pane {
     if (!o.showHelp) {
       this.help.hidden = true;
     }
+    if (o.showUnrepliedButton) {
+      this.addUnrepliedButton();
+    } else {
+      this.removeUnrepliedButton(true);
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // "Unreplied" quick filter button (and its entry in the quick filter menu
+  // that replaces the buttons in narrow windows)
+
+  addUnrepliedButton() {
+    const doc = this.doc;
+    const group = doc.querySelector("#quickFilterBarContainer .quickFilterButtons");
+    if (this.unrepliedButton || !group) {
+      return;
+    }
+    const C = this.controller;
+    const button = doc.createElement("button", { is: "toggle-button" });
+    button.id = UNREPLIED_BUTTON_ID;
+    button.className = "button collapsible-button icon-button check-button";
+    button.title = C.localize("unrepliedButtonTooltip");
+    const label = doc.createElement("span");
+    label.textContent = C.localize("unrepliedButtonLabel");
+    button.append(label);
+    group.append(button);
+    this.unrepliedButton = button;
+
+    const menu = doc.getElementById("quickFilterButtonsContext");
+    if (menu) {
+      const item = doc.createXULElement("menuitem");
+      item.id = UNREPLIED_MENUITEM_ID;
+      item.className = "quick-filter-menuitem";
+      item.setAttribute("type", "checkbox");
+      item.setAttribute("closemenu", "none");
+      // Thunderbird checks the item when this filter has a value.
+      item.setAttribute("value", UNREPLIED_FILTER);
+      item.setAttribute("label", C.localize("unrepliedButtonLabel"));
+      menu.append(item);
+      this.unrepliedMenuItem = item;
+    }
+
+    const set = on => {
+      const qfb = this.qfb;
+      if (!qfb) {
+        return;
+      }
+      qfb.filterer.setFilterValue(UNREPLIED_FILTER, on ? true : null);
+      button.pressed = on;
+      qfb.deferredUpdateSearch();
+    };
+    // toggle-button flips `pressed` in its own (earlier) click listener.
+    this.unrepliedListeners = [[button, "click", () => set(button.pressed)]];
+    if (this.unrepliedMenuItem) {
+      const item = this.unrepliedMenuItem;
+      this.unrepliedListeners.push([item, "command", () => set(item.hasAttribute("checked"))]);
+    }
+    for (const [target, type, handler] of this.unrepliedListeners) {
+      target.addEventListener(type, handler);
+    }
+    button.pressed = !!this.qfb?._filterer?.filterValues?.[UNREPLIED_FILTER];
+    this.qfb?.updateRovingTab?.();
+  }
+
+  removeUnrepliedButton(updateSearch) {
+    for (const [target, type, handler] of this.unrepliedListeners ?? []) {
+      target.removeEventListener(type, handler);
+    }
+    this.unrepliedListeners = [];
+    if (!this.unrepliedButton) {
+      return;
+    }
+    this.unrepliedButton.remove();
+    this.unrepliedMenuItem?.remove();
+    this.unrepliedButton = null;
+    this.unrepliedMenuItem = null;
+    const qfb = this.qfb;
+    if (updateSearch && qfb?._filterer?.filterValues?.[UNREPLIED_FILTER]) {
+      qfb.filterer.setFilterValue(UNREPLIED_FILTER, null);
+      qfb.updateSearch();
+    }
+    qfb?.updateRovingTab?.();
   }
 
   // ---------------------------------------------------------------------------
@@ -673,10 +762,13 @@ class Controller {
     }
 
     const QFM = lazy.QuickFilterManager;
-    if (QFM.filterDefsByName[FILTER_NAME]) {
-      QFM.killFilter(FILTER_NAME);
+    for (const name of OUR_FILTERS) {
+      if (QFM.filterDefsByName[name]) {
+        QFM.killFilter(name);
+      }
     }
     QFM.defineFilter(this.createFilterDefinition());
+    QFM.defineFilter(this.createUnrepliedFilterDefinition());
 
     ExtensionSupport.registerWindowListener(this.windowListenerId, {
       chromeURLs: [MESSENGER_URL],
@@ -704,8 +796,10 @@ class Controller {
       this.detachPane(win, true);
     }
     const QFM = lazy.QuickFilterManager;
-    if (QFM.filterDefsByName[FILTER_NAME]) {
-      QFM.killFilter(FILTER_NAME);
+    for (const name of OUR_FILTERS) {
+      if (QFM.filterDefsByName[name]) {
+        QFM.killFilter(name);
+      }
     }
     if (QFM.textBoxDomId == INPUT_ID) {
       QFM.textBoxDomId = NORMAL_TEXTBOX_ID;
@@ -808,6 +902,27 @@ class Controller {
 
   // ---------------------------------------------------------------------------
   // Quick filter integration
+
+  /** "Unreplied" button: messages without the Replied flag. */
+  createUnrepliedFilterDefinition() {
+    return {
+      name: UNREPLIED_FILTER,
+      domId: UNREPLIED_BUTTON_ID,
+      appendTerms: (termCreator, terms) => {
+        this.buildTerms(
+          termCreator,
+          [[{ attrib: "MsgStatus", op: "Isnt", valueType: "status", value: "Replied" }]],
+          terms
+        );
+      },
+      // Kept on folder change only if "sticky" is active, like Unread.
+      propagateState: (old, sticky) => (sticky && old ? true : null),
+      onCommand: state => [state, false],
+      reflectInDOM: (node, value) => {
+        node.pressed = !!value;
+      },
+    };
+  }
 
   createFilterDefinition() {
     return {
