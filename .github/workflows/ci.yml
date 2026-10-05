@@ -23,7 +23,7 @@ jobs:
           node-version: 22
       - run: npm test
       - run: npm run build
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: xpi
           path: dist/*.xpi
@@ -78,7 +78,7 @@ jobs:
         run: node tests/integration/options.mjs "$THUNDERBIRD_BIN"
       - name: Upload Thunderbird logs
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: thunderbird-logs-${{ matrix.channel }}
           path: .profiles/*.log
